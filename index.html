@@ -1,0 +1,3147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Defensa de Tesis | Esteban David López Núñez - UTA</title>
+  <style>
+    /* ==========================================================================
+       VARIABLES Y RESET (TEMA CLARO ACADÉMICO - SIN FONDOS NEGROS)
+       ========================================================================== */
+    :root {
+      --color-uta-primary: #990000;
+      --color-uta-dark: #7a0000;
+      --color-uta-light: #fef2f2;
+      --color-uta-border: #fecaca;
+      --color-navy: #1e3a8a;
+      --color-navy-dark: #172554;
+      --color-navy-light: #eff6ff;
+      --color-navy-border: #bfdbfe;
+      --color-slate-900: #0f172a;
+      --color-slate-800: #1e293b;
+      --color-slate-700: #334155;
+      --color-slate-600: #475569;
+      --color-slate-500: #64748b;
+      --color-slate-300: #cbd5e1;
+      --color-slate-200: #e2e8f0;
+      --color-slate-100: #f1f5f9;
+      --color-slate-50: #f8fafc;
+      --color-white: #ffffff;
+      --color-success: #16a34a;
+      --color-success-bg: #dcfce7;
+      --color-success-border: #86efac;
+      --color-warning: #d97706;
+      --color-warning-bg: #fef3c7;
+      --color-danger: #dc2626;
+      --color-danger-bg: #fee2e2;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 10px -1px rgba(0, 0, 0, 0.07), 0 2px 5px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 10px 20px -3px rgba(0, 0, 0, 0.08), 0 4px 8px -4px rgba(0, 0, 0, 0.04);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      --transition-fast: 0.15s ease;
+      --transition-normal: 0.25s ease;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: var(--font-family);
+      background-color: var(--color-slate-50);
+      color: var(--color-slate-800);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #presentation-app {
+      display: flex;
+      flex-direction: column;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 50% 0%, #ffffff 0%, #f1f5f9 100%);
+      position: relative;
+    }
+
+    /* Barra Superior */
+    header.deck-header {
+      height: 52px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.98);
+      border-bottom: 1px solid var(--color-slate-200);
+      z-index: 50;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .header-branding {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-logo {
+      height: 36px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .header-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-univ {
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      color: var(--color-uta-primary);
+      text-transform: uppercase;
+    }
+
+    .header-title-slug {
+      font-size: 0.78rem;
+      color: var(--color-slate-600);
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 480px;
+    }
+
+    .header-status-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Cronómetro */
+    .timer-widget {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-slate-100);
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--color-slate-200);
+      font-family: monospace, sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--color-slate-700);
+      cursor: pointer;
+      user-select: none;
+      transition: var(--transition-fast);
+    }
+
+    .timer-widget:hover {
+      background: var(--color-white);
+      border-color: var(--color-slate-300);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .timer-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: var(--color-success);
+    }
+
+    .timer-widget.warning .timer-indicator {
+      background-color: var(--color-warning);
+    }
+
+    .timer-widget.danger .timer-indicator {
+      background-color: var(--color-danger);
+      animation: pulse-danger 1s infinite;
+    }
+
+    @keyframes pulse-danger {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .slide-counter-badge {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--color-slate-700);
+      background: var(--color-slate-100);
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--color-slate-200);
+    }
+
+    /* Barra de Progreso */
+    .progress-bar-container {
+      width: 100%;
+      height: 4px;
+      background-color: var(--color-slate-200);
+      position: relative;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-uta-primary), var(--color-navy));
+      width: 0%;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Contenedor Principal de Diapositiva */
+    main.deck-viewport {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      max-width: 1540px;
+      height: 100%;
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-slate-200);
+      box-shadow: var(--shadow-lg);
+      display: none;
+      flex-direction: column;
+      padding: 24px 42px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .slide.active {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+      z-index: 10;
+    }
+
+    /* ==========================================================================
+       MODO PANTALLA COMPLETA TOTAL (100% VIEWPORT EDGE-TO-EDGE)
+       ========================================================================== */
+    :fullscreen main.deck-viewport,
+    body.fullscreen-mode main.deck-viewport {
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    :fullscreen .slide,
+    body.fullscreen-mode .slide {
+      width: 100vw;
+      max-width: 100vw;
+      height: 100vh;
+      max-height: 100vh;
+      border-radius: 0;
+      border: none;
+      box-shadow: none;
+      padding: 26px 54px;
+    }
+
+    :fullscreen header.deck-header,
+    body.fullscreen-mode header.deck-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 48px;
+      padding: 0 28px;
+      background: rgba(255, 255, 255, 0.98);
+      border-bottom: 1px solid var(--color-slate-200);
+      box-shadow: var(--shadow-sm);
+      transform: translateY(-100%);
+      opacity: 0;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+      z-index: 100;
+    }
+
+    :fullscreen footer.deck-footer,
+    body.fullscreen-mode footer.deck-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 50px;
+      padding: 0 28px;
+      background: rgba(255, 255, 255, 0.98);
+      border-top: 1px solid var(--color-slate-200);
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+      transform: translateY(100%);
+      opacity: 0;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+      z-index: 100;
+    }
+
+    :fullscreen.mouse-active header.deck-header,
+    :fullscreen.mouse-active footer.deck-footer,
+    body.fullscreen-mode.mouse-active header.deck-header,
+    body.fullscreen-mode.mouse-active footer.deck-footer,
+    header.deck-header:hover,
+    footer.deck-footer:hover {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    :fullscreen .media-card img,
+    body.fullscreen-mode .media-card img {
+      max-height: 540px;
+    }
+
+    :fullscreen .video-player-wrap video,
+    :fullscreen .video-player-wrap iframe,
+    body.fullscreen-mode .video-player-wrap video,
+    body.fullscreen-mode .video-player-wrap iframe {
+      max-height: 530px;
+      height: 530px;
+    }
+
+    /* Encabezado Interno de Diapositiva */
+    .slide-head {
+      margin-bottom: 14px;
+      border-bottom: 2px solid var(--color-slate-100);
+      padding-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .slide-meta-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--color-uta-primary);
+      background: var(--color-uta-light);
+      border: 1px solid var(--color-uta-border);
+      padding: 3px 10px;
+      border-radius: 12px;
+      margin-bottom: 3px;
+    }
+
+    .slide-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--color-slate-900);
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+    }
+
+    .slide-subtitle {
+      font-size: 0.95rem;
+      color: var(--color-slate-500);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    /* Cuerpo de Diapositiva */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      position: relative;
+    }
+
+    /* Grids */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: stretch;
+      flex: 1;
+    }
+
+    .grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      align-items: stretch;
+      flex: 1;
+    }
+
+    .grid-4col {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      align-items: stretch;
+      flex: 1;
+    }
+
+    .grid-left-wide {
+      display: grid;
+      grid-template-columns: 1.35fr 0.95fr;
+      gap: 22px;
+      align-items: stretch;
+      flex: 1;
+    }
+
+    /* Tarjetas de Contenido Ricas y Sustanciales */
+    .info-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-slate-200);
+      border-radius: var(--radius-md);
+      padding: 18px 22px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 8px;
+      position: relative;
+      transition: var(--transition-fast);
+    }
+
+    .info-card:hover {
+      border-color: var(--color-slate-300);
+      box-shadow: var(--shadow-md);
+    }
+
+    .info-card.card-accent-red {
+      border-left: 5px solid var(--color-uta-primary);
+      background: linear-gradient(135deg, #ffffff 0%, var(--color-uta-light) 100%);
+    }
+
+    .info-card.card-accent-navy {
+      border-left: 5px solid var(--color-navy);
+      background: linear-gradient(135deg, #ffffff 0%, var(--color-navy-light) 100%);
+    }
+
+    .info-card.card-accent-green {
+      border-left: 5px solid var(--color-success);
+      background: linear-gradient(135deg, #ffffff 0%, var(--color-success-bg) 100%);
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--color-slate-900);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-text {
+      font-size: 0.94rem;
+      color: var(--color-slate-700);
+      line-height: 1.5;
+    }
+
+    /* Bloques Estructurados de Objetivos: Qué, Cómo, Por qué, Qué se logró */
+    .objective-step-box {
+      background: var(--color-white);
+      border: 1px solid var(--color-slate-200);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .objective-step-box.step-red { border-left: 4px solid var(--color-uta-primary); }
+    .objective-step-box.step-navy { border-left: 4px solid var(--color-navy); }
+    .objective-step-box.step-green { border-left: 4px solid var(--color-success); }
+    .objective-step-box.step-amber { border-left: 4px solid var(--color-warning); }
+
+    .step-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--color-slate-500);
+    }
+
+    .step-title {
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: var(--color-slate-900);
+    }
+
+    .step-desc {
+      font-size: 0.88rem;
+      color: var(--color-slate-700);
+      line-height: 1.45;
+    }
+
+    /* Listas con viñetas estilizadas */
+    ul.bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    ul.bullet-list li {
+      position: relative;
+      padding-left: 22px;
+      font-size: 0.92rem;
+      color: var(--color-slate-700);
+      line-height: 1.45;
+    }
+
+    ul.bullet-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 7px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background-color: var(--color-uta-primary);
+    }
+
+    ul.bullet-list.navy li::before { background-color: var(--color-navy); }
+    ul.bullet-list.green li::before { background-color: var(--color-success); }
+
+    /* Métricas Grandes */
+    .metric-badge-box {
+      background: var(--color-slate-50);
+      border: 1px solid var(--color-slate-200);
+      border-radius: var(--radius-md);
+      padding: 16px 18px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+    }
+
+    .metric-value {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--color-uta-primary);
+      line-height: 1.1;
+      letter-spacing: -1px;
+    }
+
+    .metric-value.navy { color: var(--color-navy); }
+    .metric-value.green { color: var(--color-success); }
+
+    .metric-label {
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--color-slate-700);
+      margin-top: 4px;
+    }
+
+    .metric-desc {
+      font-size: 0.78rem;
+      color: var(--color-slate-500);
+      margin-top: 2px;
+      line-height: 1.35;
+    }
+
+    /* Medios e Imágenes: Se adaptan al cuadro para verse grandes */
+    .media-card {
+      background: var(--color-slate-50);
+      border: 1px solid var(--color-slate-200);
+      border-radius: var(--radius-md);
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      cursor: zoom-in;
+      position: relative;
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      min-height: 380px;
+    }
+
+    .media-card:hover {
+      border-color: var(--color-navy-border);
+      box-shadow: var(--shadow-md);
+    }
+
+    .media-card img {
+      width: 100%;
+      height: 100%;
+      max-height: 480px;
+      object-fit: contain;
+      border-radius: var(--radius-sm);
+      transition: transform 0.2s ease;
+    }
+
+    .media-card:hover img { transform: scale(1.015); }
+
+    .media-caption {
+      font-size: 0.8rem;
+      color: var(--color-slate-600);
+      font-weight: 700;
+      text-align: center;
+      margin-top: 8px;
+      padding: 0 8px;
+    }
+
+    .media-zoom-hint {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(15, 23, 42, 0.75);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 14px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .media-card:hover .media-zoom-hint { opacity: 1; }
+
+    /* Tablas */
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--color-slate-200);
+    }
+
+    .custom-table th {
+      background: var(--color-slate-100);
+      color: var(--color-slate-900);
+      font-weight: 800;
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 2px solid var(--color-slate-200);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .custom-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--color-slate-100);
+      color: var(--color-slate-700);
+    }
+
+    .custom-table tr:hover td { background: var(--color-slate-50); }
+
+    .custom-table tr.highlight-row {
+      background: var(--color-uta-light);
+      font-weight: 800;
+    }
+
+    .custom-table tr.highlight-row td { color: var(--color-uta-primary); }
+
+    /* Píldoras */
+    .pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.74rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .pill-green {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+      border: 1px solid var(--color-success-border);
+    }
+
+    .pill-red {
+      background: var(--color-danger-bg);
+      color: var(--color-danger);
+      border: 1px solid var(--color-uta-border);
+    }
+
+    .pill-navy {
+      background: var(--color-navy-light);
+      color: var(--color-navy);
+      border: 1px solid var(--color-navy-border);
+    }
+
+    /* Reproductor de Video (Slide 18) */
+    .video-showcase-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      height: 100%;
+      flex: 1;
+    }
+
+    .video-tabs-bar {
+      display: flex;
+      gap: 10px;
+      border-bottom: 2px solid var(--color-slate-200);
+      padding-bottom: 8px;
+    }
+
+    .video-tab-btn {
+      padding: 8px 18px;
+      background: var(--color-slate-100);
+      border: 1px solid var(--color-slate-200);
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--color-slate-700);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .video-tab-btn:hover { background: var(--color-slate-200); }
+
+    .video-tab-btn.active {
+      background: var(--color-uta-primary);
+      color: var(--color-white);
+      border-color: var(--color-uta-primary);
+    }
+
+    .video-player-wrap {
+      flex: 1;
+      background: var(--color-slate-900);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-md);
+    }
+
+    .video-player-wrap video,
+    .video-player-wrap iframe {
+      width: 100%;
+      height: 440px;
+      border: none;
+      object-fit: contain;
+    }
+
+    .video-desc-box {
+      background: var(--color-slate-50);
+      border: 1px solid var(--color-slate-200);
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+      font-size: 0.86rem;
+      color: var(--color-slate-700);
+    }
+
+    /* Barra Inferior */
+    footer.deck-footer {
+      height: 54px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.98);
+      border-top: 1px solid var(--color-slate-200);
+      z-index: 50;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.02);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.82rem;
+      color: var(--color-slate-500);
+    }
+
+    .footer-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-ctrl {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      height: 36px;
+      padding: 0 14px;
+      background: var(--color-white);
+      border: 1px solid var(--color-slate-300);
+      border-radius: var(--radius-sm);
+      color: var(--color-slate-700);
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      user-select: none;
+    }
+
+    .btn-ctrl:hover {
+      background: var(--color-slate-50);
+      border-color: var(--color-slate-400);
+      color: var(--color-slate-900);
+    }
+
+    .btn-ctrl:active { transform: translateY(1px); }
+
+    .btn-ctrl.btn-primary {
+      background: var(--color-uta-primary);
+      border-color: var(--color-uta-primary);
+      color: var(--color-white);
+    }
+
+    .btn-ctrl.btn-primary:hover {
+      background: var(--color-uta-dark);
+      border-color: var(--color-uta-dark);
+    }
+
+    .btn-ctrl.active-tool {
+      background: var(--color-navy);
+      border-color: var(--color-navy);
+      color: var(--color-white);
+    }
+
+    /* Modales */
+    #image-lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(6px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 30px;
+    }
+
+    #image-lightbox.active { display: flex; }
+
+    #lightbox-img {
+      max-width: 90vw;
+      max-height: 82vh;
+      object-fit: contain;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-xl);
+      background: white;
+      padding: 8px;
+    }
+
+    #lightbox-caption {
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: 14px;
+      text-align: center;
+      max-width: 800px;
+    }
+
+    .lightbox-close-btn {
+      position: absolute;
+      top: 24px;
+      right: 28px;
+      background: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: var(--color-slate-800);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-lg);
+    }
+
+    #notes-drawer {
+      position: fixed;
+      bottom: 54px;
+      right: 24px;
+      width: 430px;
+      max-height: 400px;
+      background: rgba(255, 255, 255, 0.98);
+      border: 1px solid var(--color-slate-300);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-xl);
+      z-index: 100;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #notes-drawer.active { display: flex; }
+
+    .notes-header {
+      background: var(--color-slate-100);
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--color-slate-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .notes-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--color-uta-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .notes-body {
+      padding: 16px;
+      overflow-y: auto;
+      font-size: 0.9rem;
+      color: var(--color-slate-800);
+      line-height: 1.55;
+    }
+
+    .notes-timing-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 800;
+      background: var(--color-navy-light);
+      color: var(--color-navy);
+      padding: 3px 10px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+    }
+
+    #overview-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(248, 250, 252, 0.97);
+      backdrop-filter: blur(8px);
+      z-index: 1500;
+      display: none;
+      flex-direction: column;
+      padding: 30px 40px;
+      overflow-y: auto;
+    }
+
+    #overview-modal.active { display: flex; }
+
+    .overview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--color-slate-200);
+    }
+
+    .overview-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--color-slate-900);
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      padding-bottom: 40px;
+    }
+
+    .overview-thumb {
+      background: white;
+      border: 1px solid var(--color-slate-200);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition-fast);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .overview-thumb:hover {
+      border-color: var(--color-uta-primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .overview-thumb.current {
+      border: 2px solid var(--color-uta-primary);
+      background: var(--color-uta-light);
+    }
+
+    .overview-thumb-num {
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: var(--color-uta-primary);
+      text-transform: uppercase;
+    }
+
+    .overview-thumb-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--color-slate-800);
+      line-height: 1.35;
+    }
+
+    #laser-pointer {
+      position: fixed;
+      width: 14px;
+      height: 14px;
+      background: rgba(239, 68, 68, 0.95);
+      box-shadow: 0 0 16px 6px rgba(239, 68, 68, 0.85), 0 0 4px 1px white;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 3000;
+      display: none;
+      transform: translate(-50%, -50%);
+    }
+
+    #help-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 1800;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #help-modal.active { display: flex; }
+
+    .help-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 28px 36px;
+      max-width: 540px;
+      width: 90%;
+      box-shadow: var(--shadow-xl);
+    }
+
+    .help-card h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--color-slate-900);
+      margin-bottom: 16px;
+    }
+
+    .kbd-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .kbd-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+
+    kbd {
+      background: var(--color-slate-100);
+      border: 1px solid var(--color-slate-300);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-family: monospace;
+      font-weight: 700;
+      font-size: 0.84rem;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+    }
+
+    /* Portada */
+    .cover-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100%;
+      gap: 12px;
+      position: relative;
+    }
+
+    .cover-logo {
+      height: 80px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .cover-univ {
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: var(--color-uta-primary);
+      text-transform: uppercase;
+    }
+
+    .cover-faculty {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--color-slate-700);
+      text-transform: uppercase;
+    }
+
+    .cover-career {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--color-navy);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .cover-divider {
+      width: 140px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-uta-primary), var(--color-navy));
+      border-radius: 2px;
+    }
+
+    .cover-thesis-title {
+      font-size: 1.55rem;
+      font-weight: 900;
+      color: var(--color-slate-900);
+      line-height: 1.3;
+      max-width: 980px;
+      letter-spacing: -0.5px;
+    }
+
+    .cover-modality {
+      font-size: 0.9rem;
+      color: var(--color-slate-600);
+      font-weight: 500;
+      max-width: 800px;
+    }
+
+    .cover-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      background: var(--color-slate-50);
+      border: 1px solid var(--color-slate-200);
+      border-radius: var(--radius-md);
+      padding: 12px 26px;
+      width: 100%;
+      max-width: 820px;
+      text-align: left;
+    }
+
+    .cover-meta-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cover-meta-label {
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: var(--color-uta-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .cover-meta-val {
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: var(--color-slate-800);
+    }
+
+    .agenda-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      height: 100%;
+      align-items: stretch;
+      flex: 1;
+    }
+
+    .agenda-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-slate-200);
+      border-radius: var(--radius-md);
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .agenda-card:hover {
+      border-color: var(--color-uta-primary);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .agenda-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--color-uta-light);
+      color: var(--color-uta-primary);
+      border: 1px solid var(--color-uta-border);
+      font-weight: 900;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .agenda-card-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--color-slate-900);
+    }
+
+    .agenda-card-desc {
+      font-size: 0.86rem;
+      color: var(--color-slate-600);
+      line-height: 1.45;
+    }
+
+    .icon-svg {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      stroke-width: 2;
+      stroke: currentColor;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      vertical-align: middle;
+    }
+
+    @media (max-height: 800px) {
+      .slide { padding: 18px 28px; }
+      .slide-title { font-size: 1.5rem; }
+      .card-title { font-size: 1.05rem; }
+      .card-text { font-size: 0.86rem; }
+      .media-card img { max-height: 290px; }
+      .video-player-wrap video,
+      .video-player-wrap iframe { max-height: 320px; height: 320px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="presentation-app">
+
+    <!-- CABECERA INSTITUCIONAL -->
+    <header class="deck-header">
+      <div class="header-branding">
+        <img src="images/logo_uta.png" alt="Logo UTA" class="header-logo">
+        <div class="header-text">
+          <span class="header-univ">Universidad Técnica de Ambato • FISEI • Software</span>
+          <span class="header-title-slug">Defensa de Titulación: Asistente con Visión Artificial para Parqueaderos</span>
+        </div>
+      </div>
+      <div class="header-status-area">
+        <div class="timer-widget" id="defense-timer" title="Clic para Iniciar / Pausar el tiempo (15-20 min)">
+          <div class="timer-indicator"></div>
+          <span id="timer-display">00:00 / 20:00</span>
+        </div>
+        <div class="slide-counter-badge" id="slide-counter">Diapositiva 1 / 25</div>
+        <button class="btn-ctrl btn-primary" id="btn-header-fullscreen" onclick="toggleFullScreen()" title="Pantalla Completa (Tecla F)">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+          <span id="btn-header-fs-text">Pantalla Completa (F)</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- BARRA DE PROGRESO -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progress-fill"></div>
+    </div>
+
+    <!-- VIEWPORT DE DIAPOSITIVAS -->
+    <main class="deck-viewport" id="viewport">
+
+      <!-- =========================================================================
+           SLIDE 1: PORTADA
+           ========================================================================= -->
+      <section class="slide active" data-slide="1" data-duration="1.0 min">
+        <div class="cover-container">
+          <img src="images/logo_uta.png" alt="Logo UTA" class="cover-logo">
+          <div class="cover-univ">Universidad Técnica de Ambato</div>
+          <div class="cover-faculty">Facultad de Ingeniería en Sistemas, Electrónica e Industrial</div>
+          <div class="cover-career">Carrera de Software</div>
+          <div class="cover-divider"></div>
+          <h1 class="cover-thesis-title">PROTOTIPO DE ASISTENTE CONVERSACIONAL CON VISIÓN ARTIFICIAL PARA DISPONIBILIDAD DE PARQUEADEROS EN EL CASCO CÉNTRICO DE AMBATO</h1>
+          <p class="cover-modality">Trabajo de titulación modalidad Proyecto de Investigación, previo a la obtención del título de Ingeniero de Software</p>
+          
+          <div class="cover-meta-grid">
+            <div class="cover-meta-item">
+              <span class="cover-meta-label">Autor</span>
+              <span class="cover-meta-val">Esteban David López Núñez</span>
+            </div>
+            <div class="cover-meta-item">
+              <span class="cover-meta-label">Tutor</span>
+              <span class="cover-meta-val">Ing. Dennis Vinicio Chicaiza Castillo, Mg.</span>
+            </div>
+            <div class="cover-meta-item">
+              <span class="cover-meta-label">Línea de Investigación</span>
+              <span class="cover-meta-val">Software, Tecnologías de la Información y Ciencia de Datos</span>
+            </div>
+            <div class="cover-meta-item">
+              <span class="cover-meta-label">Lugar y Fecha</span>
+              <span class="cover-meta-val">Ambato - Ecuador, Diciembre 2026</span>
+            </div>
+          </div>
+
+          <div style="margin-top: 6px; display: flex; gap: 14px; align-items: center;">
+            <button class="btn-ctrl btn-primary" onclick="toggleFullScreen()" style="height: 42px; padding: 0 24px; font-size: 0.96rem; font-weight: 700; border-radius: 30px; box-shadow: var(--shadow-md);">
+              <svg class="icon-svg" viewBox="0 0 24 24" style="width:20px; height:20px;"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+              Iniciar en Pantalla Completa (F)
+            </button>
+            <button class="btn-ctrl" onclick="nextSlide()" style="height: 42px; padding: 0 20px; font-size: 0.92rem; font-weight: 700; border-radius: 30px;">
+              Comenzar Exposición →
+            </button>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:00 min</div>
+          <ul>
+            <li>Saludar formalmente al Honorable Tribunal Evaluador, tutor y asistentes.</li>
+            <li>Presentar el tema de investigación orientado a resolver un problema urbano crítico en Ambato mediante IA práctica.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 2: RESUMEN EJECUTIVO (ANTES DEL ÍNDICE)
+           ========================================================================= -->
+      <section class="slide" data-slide="2" data-duration="1.5 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Plantilla UTA • Panorámica General</div>
+            <h2 class="slide-title">Resumen Ejecutivo de la Investigación</h2>
+            <div class="slide-subtitle">Síntesis estratégica de la problemática, solución tecnológica, métricas y conclusión global</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2col">
+            <div class="info-card card-accent-red">
+              <span class="pill pill-red">1. La Problemática Urbana</span>
+              <div class="card-title">Congestión por Búsqueda Activa (Cruising)</div>
+              <p class="card-text">
+                En el casco céntrico de Ambato, el <strong>30% al 50% del flujo vehicular circulante</strong> corresponde a conductores en busca activa de estacionamiento, perdiendo un promedio de <strong>8 minutos por viaje</strong>. Los estacionamientos privados operan de forma aislada sin telemetría y sus cámaras CCTV se limitan a la vigilancia pasiva.
+              </p>
+            </div>
+
+            <div class="info-card card-accent-navy">
+              <span class="pill pill-navy">2. Metodología y Solución</span>
+              <div class="card-title">Arquitectura Modular RAD e IA en CPU</div>
+              <p class="card-text">
+                Desarrollo bajo el ciclo ágil <strong>RAD</strong> articulando: procesamiento local con <strong>YOLOv8n</strong> (3.2M params) en CPU estándar, <strong>algoritmo de recorte basal al 60%</strong> para resolver el ángulo oblicuo de cámaras, filtro temporal de 8 segundos, API REST en <strong>FastAPI</strong> y asistente en <strong>Telegram</strong> con cálculo Haversine.
+              </p>
+            </div>
+
+            <div class="info-card card-accent-green">
+              <span class="pill pill-green">3. Resultados de Campo Certificados</span>
+              <div class="card-title">12.665 Observaciones en 42 Plazas Reales</div>
+              <p class="card-text">
+                Validación experimental en 3 estacionamientos (Ortiparking, Ortiparking 2 y Gavilux Suites): <strong>80,63% de Precisión ponderada</strong> (alcanzando <strong>90,30%</strong> en Gavilux), <strong>76,22% de F1-Score</strong> y 72,37% de sensibilidad, garantizando que el usuario no sea enviado a plazas ocupadas.
+              </p>
+            </div>
+
+            <div class="info-card" style="border-left: 5px solid var(--color-slate-700); background: linear-gradient(135deg, #ffffff 0%, var(--color-slate-100) 100%);">
+              <span class="pill" style="background:var(--color-slate-200); color:var(--color-slate-800);">4. Conclusión y Viabilidad</span>
+              <div class="card-title">Alternativa de Bajo Costo y Alta Confiabilidad</div>
+              <p class="card-text">
+                Se demostró que la visión artificial por software sobre cámaras existentes prescinde de sensores físicos empotrados en pavimento ($150-$300 por plaza) y GPUs costosas, ofreciendo un sistema escalable, de rápida adopción y cero fricción para los conductores de la ciudad.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:30 min</div>
+          <ul>
+            <li>Exponer la panorámica completa: problema, propuesta, resultados y conclusión.</li>
+            <li>Enfatizar las 12.665 observaciones de campo que sustentan científicamente la precisión del 80.63%.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 3: AGENDA / ÍNDICE
+           ========================================================================= -->
+      <section class="slide" data-slide="3" data-duration="0.8 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Estructura de la Sustentación</div>
+            <h2 class="slide-title">Agenda y Contenido de la Exposición</h2>
+            <div class="slide-subtitle">Estructura formal alineada a los capítulos de la tesis y los objetivos específicos</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="agenda-grid">
+            <div class="agenda-card" onclick="goToSlide(4)">
+              <div class="agenda-num">1</div>
+              <div class="agenda-card-title">Problemática e Impacto</div>
+              <div class="agenda-card-desc">Cruising for parking, crisis en el centro de Ambato, justificación técnica y formulación de objetivos.</div>
+            </div>
+            <div class="agenda-card" onclick="goToSlide(8)">
+              <div class="agenda-num">2</div>
+              <div class="agenda-card-title">Metodología y Selección</div>
+              <div class="agenda-card-desc">Ciclo de desarrollo RAD y matriz multicriterio de selección tecnológica del Capítulo III.</div>
+            </div>
+            <div class="agenda-card" onclick="goToSlide(10)">
+              <div class="agenda-num">3</div>
+              <div class="agenda-card-title">Objetivo 1: Arquitectura</div>
+              <div class="agenda-card-desc">Diseño modular de microservicios, diagnóstico situacional, requerimientos y flujo de datos asíncrono.</div>
+            </div>
+            <div class="agenda-card" onclick="goToSlide(12)">
+              <div class="agenda-num">4</div>
+              <div class="agenda-card-title">Objetivo 2: Implementación</div>
+              <div class="agenda-card-desc">YOLOv8n en CPU, recorte basal al 60%, filtro temporal de 8s, FastAPI, Supabase y Bot de Telegram.</div>
+            </div>
+            <div class="agenda-card" onclick="goToSlide(19)">
+              <div class="agenda-num">5</div>
+              <div class="agenda-card-title">Objetivo 3: Validación</div>
+              <div class="agenda-card-desc">Pruebas en 42 plazas, 12.665 observaciones, matrices de confusión y métricas cuantitativas consolidadas.</div>
+            </div>
+            <div class="agenda-card" onclick="goToSlide(22)">
+              <div class="agenda-num">6</div>
+              <div class="agenda-card-title">Evaluación y Cierre</div>
+              <div class="agenda-card-desc">Verificación de cumplimiento de objetivos, conclusiones técnicas, recomendaciones y ronda de preguntas.</div>
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 0:45 min</div>
+          <ul>
+            <li>Explicar que la exposición sigue con rigurosidad la estructura del documento escrito y los 3 objetivos específicos.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 4: EL PROBLEMA I - MOVILIDAD URBANA Y CRUISING (AMPLIADA)
+           ========================================================================= -->
+      <section class="slide" data-slide="4" data-duration="1.3 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Capítulo I • Planteamiento del Problema (Parte 1)</div>
+            <h2 class="slide-title">El Problema: La Crisis del Tráfico Parasitario Urbano</h2>
+            <div class="slide-subtitle">Fundamentación teórica y magnitud del fenómeno mundial <em>Cruising for Parking</em></div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3col">
+            <div class="metric-badge-box">
+              <div class="metric-value">> 3 Millones</div>
+              <div class="metric-label">Vehículos en Ecuador (INEC)</div>
+              <div class="metric-desc">Parque automotor nacional en crecimiento constante sin que la malla vial pueda expandirse.</div>
+            </div>
+            <div class="metric-badge-box">
+              <div class="metric-value">30% - 50%</div>
+              <div class="metric-label">Tráfico Parasitario Circulante</div>
+              <div class="metric-desc">Proporción del flujo en áreas comerciales centrales que busca activamente estacionamiento (Shoup, Sui).</div>
+            </div>
+            <div class="metric-badge-box">
+              <div class="metric-value">8 Minutos</div>
+              <div class="metric-label">Pérdida Promedio por Viaje</div>
+              <div class="metric-desc">Tiempo promedio invertido exclusivamente en encontrar plaza libre (rango de 3,5 a 14 min por trayecto).</div>
+            </div>
+          </div>
+
+          <div class="grid-2col" style="margin-top: 4px;">
+            <div class="info-card card-accent-red">
+              <div class="card-title">
+                <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                Mecanismo de Congestión en Cascada
+              </div>
+              <p class="card-text">
+                El conductor, ante la falta de certeza sobre dónde hay cupos disponibles, reduce su velocidad de marcha a menos de $15	ext{ km/h}$, frena continuamente en bocacalles y realiza maniobras imprevistas de giro o espera en doble fila. Esta conducta bloquea intersecciones semaforizadas y genera congestión en cascada en toda la red vial circundante.
+              </p>
+            </div>
+
+            <div class="info-card card-accent-navy">
+              <div class="card-title">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>
+                Impacto Ambiental y Pérdidas Económicas
+              </div>
+              <p class="card-text">
+                La circulación en bucle a baja velocidad es el régimen térmico más ineficiente para motores de combustión interna, provocando una quema incompleta de combustible, emisiones concentradas de monóxido de carbono (CO) y toneladas de CO₂ a la atmósfera, sumadas a pérdidas millonarias en horas laborales improductivas para la ciudadanía.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:15 min</div>
+          <ul>
+            <li>Exponer las cifras con impacto: la mitad de los autos en hora pico no van a ningún destino, solo están dando vueltas buscando plaza.</li>
+            <li>Destacar que no es un problema de falta de infraestructura, sino de asimetría de información: ceguera del conductor.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 5: EL PROBLEMA II - REALIDAD CRÍTICA EN AMBATO (AMPLIADA)
+           ========================================================================= -->
+      <section class="slide" data-slide="5" data-duration="1.5 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Capítulo I • Planteamiento del Problema (Parte 2)</div>
+            <h2 class="slide-title">La Problemática Específica en el Casco Céntrico de Ambato</h2>
+            <div class="slide-subtitle">Diagnóstico situacional del entorno local y formulación de la pregunta central de investigación</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2col">
+            <div class="info-card card-accent-red">
+              <div class="card-title">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+                Morfología Colonial y Alta Densidad Comercial
+              </div>
+              <p class="card-text">
+                Las arterias principales (calles <strong>Bolívar, Cevallos, Sucre, Mera, Juan B. Vela y Rocafuerte</strong>) concentran los centros administrativos, judiciales y comerciales de la provincia. Su trazado vial histórico colonial es angosto (un solo carril útil más carril tarifado), lo que imposibilita cualquier ampliación física de la calzada.
+              </p>
+              <ul class="bullet-list" style="margin-top: 4px;">
+                <li>Cualquier detención vehicular para consultar estacionamiento paraliza cuadras enteras.</li>
+                <li>La rotación del sistema municipal tarifado (SIMERT) es insuficiente en horas pico.</li>
+              </ul>
+            </div>
+
+            <div class="info-card card-accent-navy">
+              <div class="card-title">
+                <svg class="icon-svg" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect></svg>
+                La Paradoja de los Parqueaderos Privados y CCTV Pasivo
+              </div>
+              <p class="card-text">
+                Existe una amplia oferta de parqueaderos privados en el centro de Ambato, pero operan de forma <strong>aislada y desconectada</strong> de la red municipal. Con frecuencia <strong>cuentan con casillas disponibles</strong>, pero el conductor no puede conocerlas sin ingresar físicamente a calles congestionadas.
+              </p>
+              <ul class="bullet-list navy" style="margin-top: 4px;">
+                <li><strong>Ceguera de telemetría:</strong> Cero canales digitales previos para consulta en tiempo real.</li>
+                <li><strong>Infraestructura subutilizada:</strong> Los parqueaderos disponen de cámaras IP operativas que solo sirven para vigilancia pasiva post-evento.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="info-card card-accent-navy" style="padding: 14px 22px; background: linear-gradient(135deg, #ffffff 0%, var(--color-navy-light) 100%);">
+            <span class="pill pill-navy" style="align-self: flex-start; margin-bottom: 2px;">Pregunta Central de Investigación</span>
+            <p class="card-text" style="font-size: 1.05rem; font-weight: 700; color: var(--color-slate-900); line-height: 1.45;">
+              ¿Cómo determinar e informar oportunamente la disponibilidad de parqueaderos en el casco céntrico de Ambato mediante visión artificial y mensajería instantánea, sin incurrir en los elevados costos de sensores físicos por plaza?
+            </p>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:30 min</div>
+          <ul>
+            <li>Explicar con fuerza la realidad de Ambato: calles estrechas donde un auto esperando cupo genera un colapso en cadena.</li>
+            <li>Enfatizar la paradoja: los parqueaderos privados tienen espacio, pero los conductores no lo saben porque no hay telemetría previa.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 6: JUSTIFICACIÓN Y VALOR AGREGADO
+           ========================================================================= -->
+      <section class="slide" data-slide="6" data-duration="1.0 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Capítulo I • Justificación</div>
+            <h2 class="slide-title">Justificación y Valor Agregado del Proyecto</h2>
+            <div class="slide-subtitle">Viabilidad económica, eficiencia arquitectónica y democratización del acceso digital</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3col">
+            <div class="info-card card-accent-red">
+              <div class="card-title">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                Viabilidad Económica Radical
+              </div>
+              <ul class="bullet-list">
+                <li><strong>Cero sensores físicos:</strong> Elimina dispositivos empotrados en asfalto ($150-$300/plaza más obras civiles invasivas).</li>
+                <li><strong>Reutilización de CCTV:</strong> Aprovecha las cámaras IP ya operativas en los estacionamientos privados.</li>
+                <li><strong>Inferencia en CPU:</strong> Ejecución eficiente con YOLOv8n sin necesidad de costosas GPUs dedicadas.</li>
+              </ul>
+            </div>
+
+            <div class="info-card card-accent-navy">
+              <div class="card-title">
+                <svg class="icon-svg" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                Arquitectura Asíncrona Liviana
+              </div>
+              <ul class="bullet-list navy">
+                <li><strong>Procesamiento en el borde:</strong> El video pesado se procesa en el parqueadero y jamás satura el ancho de banda.</li>
+                <li><strong>Transmisión discreta:</strong> Solo se envían pequeños payloads JSON de estados binarios (0/1) a la nube.</li>
+                <li><strong>Microservicios desacoplados:</strong> Caídas de red locales no afectan la disponibilidad del bot.</li>
+              </ul>
+            </div>
+
+            <div class="info-card card-accent-green">
+              <div class="card-title">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                Adopción sin Fricción
+              </div>
+              <ul class="bullet-list green">
+                <li><strong>Canal masivo en Telegram:</strong> Aplicación de mensajería gratuita, multiplataforma y de uso masivo.</li>
+                <li><strong>Cero descargas complejas:</strong> El usuario no requiere instalar apps pesadas ni crear cuentas de usuario.</li>
+                <li><strong>Ruteo asistido por GPS:</strong> Ordenamiento por cercanía ortodrómica y enlace directo a Google Maps.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:00 min</div>
+          <ul>
+            <li>Explicar al jurado la ventaja del software frente al hardware: poner sensores en 42 plazas costaría miles de dólares; nuestro sistema cuesta cero en infraestructura adicional.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 7: OBJETIVOS DE INVESTIGACIÓN
+           ========================================================================= -->
+      <section class="slide" data-slide="7" data-duration="1.2 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Capítulo I • Objetivos</div>
+            <h2 class="slide-title">Objetivos de la Investigación</h2>
+            <div class="slide-subtitle">Propósito general y metas específicas que articulan el Capítulo III de la tesis</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="info-card card-accent-red" style="padding: 16px 22px;">
+            <span class="pill pill-red">Objetivo General</span>
+            <p class="card-text" style="font-size: 1.08rem; font-weight: 700; color: var(--color-slate-900); margin-top: 4px;">
+              Desarrollar un asistente conversacional integrado con visión artificial para consultar e informar la disponibilidad de parqueaderos urbanos en el casco céntrico de Ambato.
+            </p>
+          </div>
+
+          <div class="grid-3col">
+            <div class="info-card card-accent-navy">
+              <span class="pill pill-navy">Objetivo Específico 1</span>
+              <div class="card-title" style="font-size: 1.02rem; margin-top: 4px;">Diseño Arquitectónico</div>
+              <p class="card-text" style="font-size: 0.9rem;">
+                Diseñar la arquitectura del sistema, definiendo módulos, flujo de datos e integración entre el componente de visión artificial y el asistente conversacional para la consulta de disponibilidad.
+              </p>
+            </div>
+
+            <div class="info-card card-accent-navy">
+              <span class="pill pill-navy">Objetivo Específico 2</span>
+              <div class="card-title" style="font-size: 1.02rem; margin-top: 4px;">Implementación Funcional</div>
+              <p class="card-text" style="font-size: 0.9rem;">
+                Implementar un prototipo funcional que procese video para detectar ocupación vehicular y genere el estado de disponibilidad, integrándolo con el asistente conversacional para atender consultas.
+              </p>
+            </div>
+
+            <div class="info-card card-accent-navy">
+              <span class="pill pill-navy">Objetivo Específico 3</span>
+              <div class="card-title" style="font-size: 1.02rem; margin-top: 4px;">Validación Experimental</div>
+              <p class="card-text" style="font-size: 0.9rem;">
+                Validar el desempeño del prototipo mediante pruebas en estacionamientos del casco céntrico de Ambato, comparando la detección automatizada con la ocupación real y calculando métricas.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:15 min</div>
+          <ul>
+            <li>Enfatizar que cada uno de estos 3 objetivos específicos se desglosa minuciosamente a continuación con su respectiva sección del Capítulo III.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 8: METODOLOGÍA I - CICLO RAD Y SUS 4 FASES (AMPLIADA)
+           ========================================================================= -->
+      <section class="slide" data-slide="8" data-duration="1.3 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Capítulo II • Metodología de Desarrollo (Parte 1)</div>
+            <h2 class="slide-title">Metodología de Desarrollo: Ciclo RAD</h2>
+            <div class="slide-subtitle">Adopción y justificación del modelo de Desarrollo Rápido de Aplicaciones (RAD)</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-4col">
+            <div class="info-card card-accent-red">
+              <div class="agenda-num" style="width:28px; height:28px; font-size:0.85rem;">F1</div>
+              <div class="card-title" style="font-size: 0.98rem;">Planificación de Requisitos</div>
+              <p class="card-text" style="font-size: 0.86rem;">
+                Visitas técnicas a los 3 estacionamientos, entrevistas con administradores y levantamiento de 8 requerimientos funcionales (RF-01 a RF-08) y 6 no funcionales (RNF).
+              </p>
+            </div>
+
+            <div class="info-card card-accent-navy">
+              <div class="agenda-num" style="width:28px; height:28px; font-size:0.85rem; background:var(--color-navy-light); color:var(--color-navy); border-color:var(--color-navy-border);">F2</div>
+              <div class="card-title" style="font-size: 0.98rem;">Diseño de Usuario</div>
+              <p class="card-text" style="font-size: 0.86rem;">
+                Modelado BPMN de procesos de actualización y consulta, diseño de la herramienta interactiva de calibración poligonal y árboles conversacionales para Telegram.
+              </p>
+            </div>
+
+            <div class="info-card card-accent-navy">
+              <div class="agenda-num" style="width:28px; height:28px; font-size:0.85rem; background:var(--color-navy-light); color:var(--color-navy); border-color:var(--color-navy-border);">F3</div>
+              <div class="card-title" style="font-size: 0.98rem;">Construcción Rápida</div>
+              <p class="card-text" style="font-size: 0.86rem;">
+                Programación modular iterativa: pipeline de YOLOv8n en CPU, algoritmo de recorte basal al 60%, filtro temporal de 8s, API REST en FastAPI y persistencia en Supabase.
+              </p>
+            </div>
+
+            <div class="info-card card-accent-green">
+              <div class="agenda-num" style="width:28px; height:28px; font-size:0.85rem; background:var(--color-success-bg); color:var(--color-success); border-color:var(--color-success-border);">F4</div>
+              <div class="card-title" style="font-size: 0.98rem;">Transición y Pruebas</div>
+              <p class="card-text" style="font-size: 0.86rem;">
+                Despliegue experimental en 42 plazas reales, registro manual simultáneo de Verdad de Campo (12.665 observaciones), cotejo cronológico automatizado y calibración final.
+              </p>
+            </div>
+          </div>
+
+          <div class="info-card card-accent-navy" style="padding: 14px 20px;">
+            <div class="card-title" style="font-size: 0.98rem;">Justificación Técnica de la Selección de RAD</div>
+            <p class="card-text" style="font-size: 0.9rem;">
+              Las soluciones que integran visión por computador sobre transmisiones de video en vivo enfrentan perturbaciones físicas impredecibles en laboratorio (sombras de muros, peatones, oclusiones diagonales). RAD permitió prototipar e iterar directamente con las señales RTSP de los estacionamientos desde etapas iniciales, ajustando los umbrales espaciales y temporales con retroalimentación empírica real.
+            </p>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:15 min</div>
+          <ul>
+            <li>Explicar que RAD es la metodología ideal para prototipos de IA con interfaces de usuario porque fomenta la validación temprana con datos de campo reales.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 9: METODOLOGÍA II - SELECCIÓN MULTICRITERIO DE TECNOLOGÍAS (AMPLIADA)
+           ========================================================================= -->
+      <section class="slide" data-slide="9" data-duration="1.5 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Capítulo III • Sección 3.1: Selección Multicriterio</div>
+            <h2 class="slide-title">Selección Multicriterio de la Pila Tecnológica</h2>
+            <div class="slide-subtitle">Evaluación formal mediante 7 criterios técnicos (C1 a C7) y matrices de decisión ponderadas</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2col">
+            <div class="info-card card-accent-red">
+              <div class="card-title" style="font-size: 1.05rem;">Criterios de Evaluación Ponderados (Cap. III)</div>
+              <ul class="bullet-list" style="font-size: 0.88rem;">
+                <li><strong>C1. Velocidad de respuesta (RNF-01):</strong> Tiempos de inferencia cuasi en tiempo real ($\le 2	ext{ s}$).</li>
+                <li><strong>C2. Precisión (RF-02, RF-03):</strong> Certeza en detección y minimización de falsos positivos en plazas.</li>
+                <li><strong>C3. Costo bajo (RNF-06):</strong> Código abierto y ejecución en hardware accesible (CPU estándar).</li>
+                <li><strong>C4. Facilidad de despliegue (RNF-04):</strong> Curva de configuración, estabilidad y documentación.</li>
+                <li><strong>C5. Compatibilidad sistémica (RNF-03):</strong> Interoperabilidad nativa con Python y OpenCV.</li>
+                <li><strong>C6. Escalabilidad (RNF-02, RF-08):</strong> Capacidad de sumar múltiples estacionamientos concurrentes.</li>
+                <li><strong>C7. Facilidad de uso final (RNF-05):</strong> Cero barreras de acceso para el conductor sin descargas.</li>
+              </ul>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div class="info-card card-accent-navy" style="padding: 12px 16px;">
+                <div class="card-title" style="font-size: 0.95rem;">Modelo Neuronal: YOLOv8n frente a Faster R-CNN y SSD</div>
+                <p class="card-text" style="font-size: 0.84rem;">
+                  Faster R-CNN (two-stage) opera a menos de 5 FPS en CPU y exige GPUs de más de $1500. YOLOv8n opera en una sola etapa con solo 3.2M de parámetros, logrando >15 FPS en CPU con precisión superior al 95% en vehículos.
+                </p>
+              </div>
+
+              <div class="info-card card-accent-navy" style="padding: 12px 16px;">
+                <div class="card-title" style="font-size: 0.95rem;">Entorno: Borde (Edge) frente a Nube (Cloud Video)</div>
+                <p class="card-text" style="font-size: 0.84rem;">
+                  Transmitir video ininterrumpido a la nube colapsaría la red local del parqueadero ($>50	ext{ Mbps}$). El procesamiento en el borde ejecuta la IA en sitio y transmite únicamente pequeños estados binarios (0/1).
+                </p>
+              </div>
+
+              <div class="info-card card-accent-green" style="padding: 12px 16px;">
+                <div class="card-title" style="font-size: 0.95rem;">API y Mensajería: FastAPI + Supabase + Telegram</div>
+                <p class="card-text" style="font-size: 0.84rem;">
+                  FastAPI supera a Flask/Django por su concurrencia asíncrona ASGI nativa; PostgreSQL en Supabase asegura consistencia relacional y JSON; y Telegram Bot API ofrece botones táctiles y GPS sin costo por mensaje.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:30 min</div>
+          <ul>
+            <li>Explicar detalladamente la matriz de selección técnica del Capítulo III: cada decisión tiene sustento científico y operacional riguroso.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 10: OBJETIVO 1 - DIAGNÓSTICO Y REQUERIMIENTOS (CAP. III.1)
+           ========================================================================= -->
+      <section class="slide" data-slide="10" data-duration="1.3 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Objetivo Específico 1 • Capítulo III • Sección 3.1</div>
+            <h2 class="slide-title">Objetivo 1: Diagnóstico y Requerimientos de la Arquitectura</h2>
+            <div class="slide-subtitle">Fundamentación de la arquitectura a partir de situaciones reales de campo (S-01 a S-06)</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2col">
+            <div class="objective-step-box step-red">
+              <span class="step-tag">🔍 ¿Qué se hizo?</span>
+              <div class="step-title">Diagnóstico de Partida y Especificación de Requisitos</div>
+              <p class="step-desc">
+                Se aplicaron fichas de observación técnica (Anexo A) en los estacionamientos de Ambato, identificando 6 situaciones operativas clave (S-01 a S-06) y deduciendo 8 requerimientos funcionales (RF-01 a RF-08) y 6 no funcionales (RNF).
+              </p>
+            </div>
+
+            <div class="objective-step-box step-navy">
+              <span class="step-tag">⚙️ ¿Cómo se hizo?</span>
+              <div class="step-title">Mapeo Sistemático Situación ➔ Requerimiento</div>
+              <p class="step-desc">
+                <strong>S-01 (CCTV existente):</strong> Exige reutilizar cámaras sin sensores de asfalto (RF-01).<br>
+                <strong>S-02 (Sin canal previo):</strong> Exige asistente conversacional accesible (RF-06).<br>
+                <strong>S-03 (Sombras y peatones):</strong> Exige delimitación poligonal y filtro temporal (RF-03, RF-04).<br>
+                <strong>S-06 (Bajo ancho de banda):</strong> Exige inferencia local en CPU en el borde (RNF-01).
+              </p>
+            </div>
+
+            <div class="objective-step-box step-amber">
+              <span class="step-tag">💡 ¿Por qué se hizo así?</span>
+              <div class="step-title">Trazabilidad desde la Realidad Física</div>
+              <p class="step-desc">
+                Para evitar diseñar un software teórico aislado. Cada línea de código y cada módulo arquitectónico responden directamente a una limitación física documentada en los estacionamientos del casco céntrico.
+              </p>
+            </div>
+
+            <div class="objective-step-box step-green">
+              <span class="step-tag">🏆 ¿Qué se logró?</span>
+              <div class="step-title">Bases Formales del Diseño de Software</div>
+              <p class="step-desc">
+                Una especificación rigurosa que garantizó el desacoplamiento funcional: separar la captura pesada de video, el almacenamiento de estados y la capa de consumo de usuarios en microservicios independientes.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:15 min</div>
+          <ul>
+            <li>Explicar cómo se cumple la primera parte del Objetivo 1: fundamentar los requisitos a partir de la realidad de campo.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 11: OBJETIVO 1 - ARQUITECTURA MODULAR DESACOPLADA (CAP. III.1)
+           ========================================================================= -->
+      <section class="slide" data-slide="11" data-duration="1.5 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Objetivo Específico 1 • Capítulo III • Sección 3.1</div>
+            <h2 class="slide-title">Objetivo 1: Arquitectura Modular Desacoplada</h2>
+            <div class="slide-subtitle">Estructuración en 4 capas independientes con flujo de datos asíncrono y tolerancia a fallos</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-left-wide">
+            <!-- Imagen adaptada con espacio amplio -->
+            <div class="media-card" onclick="openLightbox('images/fig_arquitectura.png', 'Figura: Arquitectura general desacoplada del sistema (Capítulo III)')">
+              <img src="images/fig_arquitectura.png" alt="Arquitectura del Sistema">
+              <div class="media-zoom-hint">Clic para ampliar</div>
+              <div class="media-caption">Módulos: Fuentes de Video, Visión Local, Persistencia Supabase, API FastAPI y Telegram Bot</div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div class="objective-step-box step-red">
+                <span class="step-tag">🔍 ¿Qué se hizo?</span>
+                <div class="step-title">Estructura en 4 Microservicios Desacoplados</div>
+                <p class="step-desc">1. Borde/CCTV (OpenCV + YOLOv8n); 2. Persistencia (Supabase PostgreSQL); 3. API REST (FastAPI ASGI); 4. Interfaz (Bot Telegram).</p>
+              </div>
+
+              <div class="objective-step-box step-navy">
+                <span class="step-tag">⚙️ ¿Cómo se hizo?</span>
+                <div class="step-title">Flujo de Datos Asíncrono Basado en Estados</div>
+                <p class="step-desc">El módulo de visión detecta ocupación en memoria local y solo transmite un JSON ligero con el estado binario (0/1) hacia Supabase mediante conexiones asíncronas seguras.</p>
+              </div>
+
+              <div class="objective-step-box step-amber">
+                <span class="step-tag">💡 ¿Por qué se hizo así?</span>
+                <div class="step-title">Aislamiento de Fallos y Ahorro de Ancho de Banda</div>
+                <p class="step-desc">Si una cámara o la red local de un parqueadero se cae, el bot no se congela; sigue operando normalmente informando el último estado conocido con timestamp.</p>
+              </div>
+
+              <div class="objective-step-box step-green">
+                <span class="step-tag">🏆 ¿Qué se logró?</span>
+                <div class="step-title">Cumplimiento al 100% del Objetivo 1</div>
+                <p class="step-desc">Arquitectura escalable, tolerante a fallos y de bajo consumo que permite incorporar nuevos estacionamientos de forma totalmente transparente.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:30 min</div>
+          <ul>
+            <li>Explicar con claridad el diagrama arquitectónico: el video pesado nunca sale del parqueadero; solo viajan datos binarios livianos a Supabase.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 12: OBJETIVO 2 - CALIBRACIÓN Y MAPEO POLIGONAL (CAP. III.2)
+           ========================================================================= -->
+      <section class="slide" data-slide="12" data-duration="1.2 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Objetivo Específico 2 • Capítulo III • Sección 3.2</div>
+            <h2 class="slide-title">Objetivo 2: Calibración y Mapeo Poligonal de Plazas</h2>
+            <div class="slide-subtitle">Delimitación bidimensional interactiva de casillas con coordenadas normalizadas en Supabase</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-left-wide">
+            <div class="media-card" onclick="openLightbox('images/captura_delimitacion_plazas.png', 'Figura: Interfaz interactiva para delimitación de coordenadas poligonales')">
+              <img src="images/captura_delimitacion_plazas.png" alt="Delimitación de Plazas">
+              <div class="media-zoom-hint">Clic para ampliar</div>
+              <div class="media-caption">Mapeo gráfico de 4 vértices normalizados por casilla sobre la vista de cámara IP</div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div class="objective-step-box step-red">
+                <span class="step-tag">🔍 ¿Qué se hizo?</span>
+                <div class="step-title">Herramienta Gráfica de Mapeo Interactivo</div>
+                <p class="step-desc">Una interfaz visual que permite al operador hacer clic sobre los 4 vértices de cada plaza de parqueo directamente sobre el fotograma de la cámara IP.</p>
+              </div>
+
+              <div class="objective-step-box step-navy">
+                <span class="step-tag">⚙️ ¿Cómo se hizo?</span>
+                <div class="step-title">Normalización Matemática en el Rango [0, 1]</div>
+                <p class="step-desc">Las coordenadas en píxeles $(X, Y)$ se dividen entre el ancho y alto del video ($X/W, Y/H$), almacenándose en formato JSON vectorial en PostgreSQL (Supabase).</p>
+              </div>
+
+              <div class="objective-step-box step-amber">
+                <span class="step-tag">💡 ¿Por qué se hizo así?</span>
+                <div class="step-title">Inmunidad a Cambios de Resolución y Homografía</div>
+                <p class="step-desc">Evita costosas matrices de homografía o calibración de lentes. Si la cámara cambia de resolución (Full HD a 720p), los polígonos no se descalibran jamás.</p>
+              </div>
+
+              <div class="objective-step-box step-green">
+                <span class="step-tag">🏆 ¿Qué se logró?</span>
+                <div class="step-title">Calibración en Minutos de 42 Plazas Reales</div>
+                <p class="step-desc">Se calibraron las 17 plazas de Ortiparking, 15 de Ortiparking 2 y 10 de Gavilux en menos de 10 minutos por recinto, con recarga dinámica sin reiniciar el backend.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:15 min</div>
+          <ul>
+            <li>Explicar la enorme ventaja de la normalización: el software es totalmente independiente del lente y la resolución de la cámara.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 13: OBJETIVO 2 - DETECCIÓN CON YOLOV8N EN CPU (CAP. III.2)
+           ========================================================================= -->
+      <section class="slide" data-slide="13" data-duration="1.2 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Objetivo Específico 2 • Capítulo III • Sección 3.2</div>
+            <h2 class="slide-title">Objetivo 2: Detección Vehicular con YOLOv8n en CPU</h2>
+            <div class="slide-subtitle">Inferencia periódica optimizada para 5 clases automotoras sin tarjetas gráficas dedicadas</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-left-wide">
+            <div class="media-card" onclick="openLightbox('images/validacion_inferencia_tiempo_real.png', 'Figura: Inferencia en tiempo real y solapamiento porcentual por plaza')">
+              <img src="images/validacion_inferencia_tiempo_real.png" alt="Inferencia YOLOv8n">
+              <div class="media-zoom-hint">Clic para ampliar</div>
+              <div class="media-caption">Superposición visual: Borde rojo = Ocupada (con % solapamiento), Borde celeste = Libre</div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div class="objective-step-box step-red">
+                <span class="step-tag">🔍 ¿Qué se hizo?</span>
+                <div class="step-title">Detector Convolucional de una Sola Etapa</div>
+                <p class="step-desc">Se integró el modelo compacto YOLOv8n (nano) de Ultralytics con pesos preentrenados sobre COCO, filtrando 5 clases: autos, camionetas, motos, furgonetas y buses.</p>
+              </div>
+
+              <div class="objective-step-box step-navy">
+                <span class="step-tag">⚙️ ¿Cómo se hizo?</span>
+                <div class="step-title">Inferencia Discreta con Cadencia Periódica (Δt = 2s)</div>
+                <p class="step-desc">En lugar de procesar a 30 o 60 FPS continuos, el motor captura y analiza un fotograma cada 2 segundos en un hilo asíncrono desacoplado en CPU.</p>
+              </div>
+
+              <div class="objective-step-box step-amber">
+                <span class="step-tag">💡 ¿Por qué se hizo así?</span>
+                <div class="step-title">Eficiencia Energética y Hardware Accesible</div>
+                <p class="step-desc">Las plazas no cambian de estado en milisegundos; una tasa de 2 segundos es tiempo real perfecto para conductores y reduce el consumo de CPU en más del 90%.</p>
+              </div>
+
+              <div class="objective-step-box step-green">
+                <span class="step-tag">🏆 ¿Qué se logró?</span>
+                <div class="step-title">Inferencia a >15 FPS en Procesadores Estándar</div>
+                <p class="step-desc">Detección fluida y certera sin comprar GPUs costosas de escritorio, haciendo el sistema 100% instalable en computadoras de oficina existentes.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:15 min</div>
+          <ul>
+            <li>Explicar que procesar a 60 FPS sería un derroche inútil de energía. Cada 2 segundos es la cadencia óptima para parqueaderos.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 14: OBJETIVO 2 - RECORTE BASAL AL 60% (CAP. III.2)
+           ========================================================================= -->
+      <section class="slide" data-slide="14" data-duration="1.5 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Innovación Algorítmica • Capítulo III • Sección 3.2 y 3.3</div>
+            <h2 class="slide-title">Objetivo 2: Algoritmo de Recorte Basal al 60%</h2>
+            <div class="slide-subtitle">Solución geométrica contra falsos positivos generados por el ángulo oblicuo de las cámaras</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-left-wide">
+            <div class="media-card" onclick="openLightbox('images/validacion_alta_ocupacion_oclusion.png', 'Figura: Detección en alta ocupación y oclusiones bajo perspectiva diagonal')">
+              <img src="images/validacion_alta_ocupacion_oclusion.png" alt="Recorte Basal y Oclusiones">
+              <div class="media-zoom-hint">Clic para ampliar</div>
+              <div class="media-caption">Desafío resuelto: El techo de un auto no invade la plaza contigua gracias al recorte basal</div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div class="objective-step-box step-red">
+                <span class="step-tag">🔍 ¿Qué se hizo?</span>
+                <div class="step-title">Algoritmo de Contacto Basal en <code>mapping/asignacion.py</code></div>
+                <p class="step-desc">Se implementó una rutina matemática que descarta el 40% superior de la caja delimitadora predicha por YOLO y conserva únicamente el <strong>60% inferior</strong> (<code>ratio_base = 0.60</code>).</p>
+              </div>
+
+              <div class="objective-step-box step-navy">
+                <span class="step-tag">⚙️ ¿Cómo se hizo?</span>
+                <div class="step-title">Intersección Vectorial con Shapely y Asignación Voraz</div>
+                <p class="step-desc">Se calcula la coordenada $y_{	ext{corte}} = y_1 + (y_2 - y_1)(1.0 - 	ext{ratio\_base})$ para aislar la huella de las ruedas, intersectando con Shapely ($S > 0.10$) con emparejamiento voraz (*greedy*).</p>
+              </div>
+
+              <div class="objective-step-box step-amber">
+                <span class="step-tag">💡 ¿Por qué se hizo así?</span>
+                <div class="step-title">Principio Físico: Plazas y Ruedas Están en el Asfalto</div>
+                <p class="step-desc">En cámaras oblicuas ($30^\circ-45^\circ$), el techo del auto se proyecta visualmente sobre la plaza vecina. Las ruedas son lo único coplanar con las líneas pintadas en el suelo.</p>
+              </div>
+
+              <div class="objective-step-box step-green">
+                <span class="step-tag">🏆 ¿Qué se logró?</span>
+                <div class="step-title">Supresión Total de Falsos Positivos por Perspectiva</div>
+                <p class="step-desc">Se evitó que vehículos altos (camionetas/SUVs) marquen como ocupadas casillas contiguas vacías, elevando la precisión por encima del 80%.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:30 min</div>
+          <ul>
+            <li>Destacar con entusiasmo esta innovación: resolvimos un problema óptico tridimensional mediante software y geometría vectorial.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 15: OBJETIVO 2 - FILTRO TEMPORAL Y PEATONES (CAP. III.2)
+           ========================================================================= -->
+      <section class="slide" data-slide="15" data-duration="1.2 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Robustez Operativa • Capítulo III • Sección 3.2 y 3.3</div>
+            <h2 class="slide-title">Objetivo 2: Estabilización Temporal y Supresión de Ruido</h2>
+            <div class="slide-subtitle">Filtro de ventana deslizante temporal para eliminar parpadeo y neutralizar peatones</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-left-wide">
+            <div class="media-card" onclick="openLightbox('images/validacion_filtro_peatones.png', 'Figura: Validación de filtro temporal ante tránsito peatonal transitorio')">
+              <img src="images/validacion_filtro_peatones.png" alt="Filtro de Peatones">
+              <div class="media-zoom-hint">Clic para ampliar</div>
+              <div class="media-caption">Inmunidad al ruido: Transeúntes cruzando sobre plazas libres no alteran el estado del sistema</div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div class="objective-step-box step-red">
+                <span class="step-tag">🔍 ¿Qué se hizo?</span>
+                <div class="step-title">Filtro de Ventana Deslizante Temporal (N = 7 Muestras)</div>
+                <p class="step-desc">Un buffer circular en memoria RAM que almacena las últimas 7 inferencias consecutivas de cada plaza de parqueo (equivalente a una ventana de 14 segundos).</p>
+              </div>
+
+              <div class="objective-step-box step-navy">
+                <span class="step-tag">⚙️ ¿Cómo se hizo?</span>
+                <div class="step-title">Criterio de Persistencia Mayoritaria Mínima (8 Segundos)</div>
+                <p class="step-desc">Para registrar un cambio oficial de estado (Libre ➔ Ocupado o viceversa) en Supabase, el nuevo estado debe mantenerse en al menos 4 de las 7 muestras ($\ge 8	ext{ s}$).</p>
+              </div>
+
+              <div class="objective-step-box step-amber">
+                <span class="step-tag">💡 ¿Por qué se hizo así?</span>
+                <div class="step-title">Filtrado de Perturbaciones Dinámicas Transitorias</div>
+                <p class="step-desc">Un transeúnte cruzando la plaza demora de 2 a 4 segundos; un auto maniobrando en reversa demora 5 segundos. Analizar un solo fotograma generaría parpadeo (*flickering*).</p>
+              </div>
+
+              <div class="objective-step-box step-green">
+                <span class="step-tag">🏆 ¿Qué se logró?</span>
+                <div class="step-title">Estabilidad Certificada del 100% ante Peatones</div>
+                <p class="step-desc">Cero cambios erróneos de estado por tránsito de personas o maniobras momentáneas, garantizando datos limpios y confiables para el conductor.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:15 min</div>
+          <ul>
+            <li>Explicar que la ventana temporal es el cerebro de estabilidad del prototipo: filtra el ruido del mundo real.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 16: OBJETIVO 2 - BACKEND FASTAPI Y SUPABASE (CAP. III.2)
+           ========================================================================= -->
+      <section class="slide" data-slide="16" data-duration="1.2 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Objetivo Específico 2 • Capítulo III • Sección 3.2</div>
+            <h2 class="slide-title">Objetivo 2: Backend Asíncrono en FastAPI y Supabase</h2>
+            <div class="slide-subtitle">Servicios web RESTful tipados con Pydantic y persistencia relacional en PostgreSQL</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-left-wide">
+            <div class="media-card" onclick="openLightbox('images/captura_api.png', 'Figura: Documentación interactiva Swagger UI de la API REST en FastAPI')">
+              <img src="images/captura_api.png" alt="Documentación Swagger FastAPI">
+              <div class="media-zoom-hint">Clic para ampliar</div>
+              <div class="media-caption">Endpoints RESTful con esquemas declarativos tipados Pydantic y latencias < 50 ms</div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div class="objective-step-box step-red">
+                <span class="step-tag">🔍 ¿Qué se hizo?</span>
+                <div class="step-title">API REST Asíncrona y Base de Datos Relacional</div>
+                <p class="step-desc">Desarrollo de servicios web en FastAPI (Uvicorn ASGI) conectados mediante SQLAlchemy asíncrono a PostgreSQL alojado en la nube de Supabase.</p>
+              </div>
+
+              <div class="objective-step-box step-navy">
+                <span class="step-tag">⚙️ ¿Cómo se hizo?</span>
+                <div class="step-title">Validación Declarativa Pydantic y Esquema Normalizado</div>
+                <p class="step-desc">Tablas <code>parqueaderos</code>, <code>plazas</code> (geometría normalizada JSON) y <code>registros_ocupacion</code> con endpoint principal <code>GET /parqueaderos</code> para agregación instantánea.</p>
+              </div>
+
+              <div class="objective-step-box step-amber">
+                <span class="step-tag">💡 ¿Por qué se hizo así?</span>
+                <div class="step-title">Rendimiento Concurrente sin Bloqueos de I/O</div>
+                <p class="step-desc">FastAPI procesa peticiones concurrentes en milisegundos gracias al event loop de Python, ofreciendo además documentación viva en Swagger UI para integración.</p>
+              </div>
+
+              <div class="objective-step-box step-green">
+                <span class="step-tag">🏆 ¿Qué se logró?</span>
+                <div class="step-title">Tiempos de Respuesta Menores a 50 ms</div>
+                <p class="step-desc">Capacidad probada para atender concurrentemente cientos de consultas simultáneas de conductores sin degradación de velocidad ni bloqueos de base de datos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:15 min</div>
+          <ul>
+            <li>Explicar la solidez del backend: tipado estricto con Pydantic y velocidad ASGI que atiende a cientos de usuarios a la vez.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 17: OBJETIVO 2 - ASISTENTE EN TELEGRAM Y HAVERSINE (CAP. III.2)
+           ========================================================================= -->
+      <section class="slide" data-slide="17" data-duration="1.2 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Objetivo Específico 2 • Capítulo III • Sección 3.2</div>
+            <h2 class="slide-title">Objetivo 2: Asistente en Telegram y Ruteo por Haversine</h2>
+            <div class="slide-subtitle">Interfaz conversacional accesible sin fricción con recomendación geoespacial por cercanía</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-left-wide">
+            <div class="media-card" onclick="openLightbox('images/captura_bot_menu.png', 'Figura: Interfaz del Asistente Conversacional en Telegram con teclado rápido')">
+              <img src="images/captura_bot_menu.png" alt="Bot Telegram Menú" style="max-height:350px;">
+              <div class="media-zoom-hint">Clic para ampliar</div>
+              <div class="media-caption">Menú de un toque: Ver Disponibilidad, Enviar Ubicación GPS y Enlace directo a Google Maps</div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div class="objective-step-box step-red">
+                <span class="step-tag">🔍 ¿Qué se hizo?</span>
+                <div class="step-title">Bot Conversacional con Teclados Rápidos (ReplyKeyboardMarkup)</div>
+                <p class="step-desc">Se programó un bot en Python conectado a la API de Telegram con opciones táctiles directas para consultar disponibilidad y enviar geolocalización.</p>
+              </div>
+
+              <div class="objective-step-box step-navy">
+                <span class="step-tag">⚙️ ¿Cómo se hizo?</span>
+                <div class="step-title">Fórmula de Haversine para Distancia Ortodrómica</div>
+                <p class="step-desc">
+                  Al recibir el GPS del conductor $(\phi_1, \lambda_1)$, calcula la distancia en km a cada parqueadero con cupos libres ($R pprox 6371	ext{ km}$):<br>
+                  $d = 2R \cdot rcsin\left(\sqrt{\sin^2(\Delta \phi / 2) + \cos \phi_1 \cos \phi_2 \sin^2(\Delta \lambda / 2)}ight)$
+                </p>
+              </div>
+
+              <div class="objective-step-box step-amber">
+                <span class="step-tag">💡 ¿Por qué se hizo así?</span>
+                <div class="step-title">Cero Fricción para Conducción Segura</div>
+                <p class="step-desc">Escribir texto mientras se conduce es peligroso. El bot funciona con 2 toques en pantalla y genera el enlace directo para navegación en Google Maps.</p>
+              </div>
+
+              <div class="objective-step-box step-green">
+                <span class="step-tag">🏆 ¿Qué se logró?</span>
+                <div class="step-title">Cumplimiento al 100% del Objetivo 2</div>
+                <p class="step-desc">Prototipo funcional plenamente integrado: desde la cámara en el parqueadero hasta la recomendación en el móvil del conductor en tiempo real.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:15 min</div>
+          <ul>
+            <li>Explicar que Telegram fue un acierto: democratiza el acceso sin obligar a la gente a descargar apps adicionales.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 18: DEMOSTRACIÓN EN VIDEO EN ESCENARIOS REALES
+           ========================================================================= -->
+      <section class="slide" data-slide="18" data-duration="1.5 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Prototipo Funcional • Evidencia Experimental</div>
+            <h2 class="slide-title">Demostración en Video en Escenarios Reales</h2>
+            <div class="slide-subtitle">Reproducción de la inferencia en tiempo real en los 3 estacionamientos del casco céntrico</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="video-showcase-container">
+            <div class="video-tabs-bar">
+              <button class="video-tab-btn active" onclick="switchVideo('https://drive.google.com/file/d/1yRfaGDEykGUDPGat5rR2cl4Emxt7mp7t/preview', 'Gavilux Suites (Mera y 12 de Noviembre): Geometría regular en patio cerrado con ángulo cenital favorable y 90,30% de precisión.')">
+                Estacionamiento 1: Gavilux Suites
+              </button>
+              <button class="video-tab-btn" onclick="switchVideo('https://drive.google.com/file/d/1MDIndMcZDqLIcWK4HeXCz3ctZ0hU8XN2/preview', 'Ortiparking Principal (Rocafuerte y Vela): Distribución longitudinal profunda a cielo abierto (15m) con sombras perimetrales.')">
+                Estacionamiento 2: Ortiparking Principal
+              </button>
+              <button class="video-tab-btn" onclick="switchVideo('https://drive.google.com/file/d/1qIA2qGHtdqG7hWIZtv6Rh9tWZrpT7Dte/preview', 'Ortiparking 2 (Quito y Cevallos): Configuración mixta semicubierta con variaciones abruptas de luz interior/exterior.')">
+                Estacionamiento 3: Ortiparking 2
+              </button>
+            </div>
+
+            <div class="video-player-wrap">
+              <iframe id="demo-video-player" src="https://drive.google.com/file/d/1yRfaGDEykGUDPGat5rR2cl4Emxt7mp7t/preview" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            </div>
+
+            <div class="video-desc-box" id="video-caption-text">
+              <strong>Gavilux Suites:</strong> Geometría regular de tipo patio cerrado con ángulo cenital favorable. Se observa la delimitación poligonal en celeste (plazas libres) y rojo (ocupadas) con solapamiento espacial instantáneo.
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:30 min</div>
+          <ul>
+            <li>Reproducir unos segundos para mostrar cómo el algoritmo delimita las casillas libres y ocupadas con total nitidez.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 19: OBJETIVO 3 - DISEÑO EXPERIMENTAL Y VERDAD DE CAMPO (CAP. III.3)
+           ========================================================================= -->
+      <section class="slide" data-slide="19" data-duration="1.2 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Objetivo Específico 3 • Capítulo III • Sección 3.3</div>
+            <h2 class="slide-title">Objetivo 3: Diseño Experimental y Verdad de Campo</h2>
+            <div class="slide-subtitle">Protocolo riguroso de contraste frente a registros de campo sobre 42 plazas en Ambato</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3col">
+            <div class="info-card card-accent-red">
+              <div class="card-title">Ortiparking Principal</div>
+              <span class="pill pill-navy">17 Plazas Monitoreadas</span>
+              <p class="card-text" style="font-size:0.86rem; margin-top:4px;">
+                <strong>Ubicación:</strong> Rocafuerte y Juan B. Vela.<br>
+                <strong>Tipo:</strong> Cielo abierto longitudinal profundo (15m).<br>
+                <strong>Desafío Óptico:</strong> Muros perimetrales altos que generan sombras oblicuas en la tarde.
+              </p>
+            </div>
+
+            <div class="info-card card-accent-navy">
+              <div class="card-title">Ortiparking 2</div>
+              <span class="pill pill-navy">15 Plazas Monitoreadas</span>
+              <p class="card-text" style="font-size:0.86rem; margin-top:4px;">
+                <strong>Ubicación:</strong> Sucre y Guayaquil (Quito y Cevallos).<br>
+                <strong>Tipo:</strong> Mixto semi-cubierto (12m fondo).<br>
+                <strong>Desafío Óptico:</strong> Fuerte contraste de luz entre plazas internas techadas y externas al sol.
+              </p>
+            </div>
+
+            <div class="info-card card-accent-green">
+              <div class="card-title">Gavilux Suites</div>
+              <span class="pill pill-green">10 Plazas Monitoreadas</span>
+              <p class="card-text" style="font-size:0.86rem; margin-top:4px;">
+                <strong>Ubicación:</strong> Bolívar y Castillo (Mera y 12 Nov).<br>
+                <strong>Tipo:</strong> Patio cerrado uniforme (8-10m).<br>
+                <strong>Ventaja Óptica:</strong> Pavimento asfáltico regular con ángulo cenital balanceado.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid-2col" style="margin-top: 4px;">
+            <div class="objective-step-box step-navy">
+              <span class="step-tag">⚙️ ¿Cómo se hizo el levantamiento?</span>
+              <div class="step-title">Levantamiento Simultáneo de Ground Truth</div>
+              <p class="step-desc">Se registró visual y manualmente minuto a minuto el estado físico real de cada casilla (1=ocupada, 0=libre) con tipos de automotor y maniobras en fichas técnicas normalizadas (Anexos B y C).</p>
+            </div>
+
+            <div class="objective-step-box step-green">
+              <span class="step-tag">🏆 ¿Qué se logró?</span>
+              <div class="step-title">Consolidado de 12.665 Observaciones Discretas</div>
+              <p class="step-desc">El script <code>evaluar_sesion.py</code> emparejó cada marca de tiempo contra las predicciones en Supabase, construyendo una base científica de <strong>12.665 datos de plaza × instante</strong>.</p>
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:15 min</div>
+          <ul>
+            <li>Destacar la rigurosidad: no se hicieron 10 pruebas al ojo, sino más de 12 mil observaciones cronometradas con bitácora de campo.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 20: OBJETIVO 3 - MATRICES DE CONFUSIÓN (CAP. III.3)
+           ========================================================================= -->
+      <section class="slide" data-slide="20" data-duration="1.5 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Objetivo Específico 3 • Capítulo III • Sección 3.3</div>
+            <h2 class="slide-title">Objetivo 3: Matrices de Confusión por Escenario</h2>
+            <div class="slide-subtitle">Distribución cuantitativa de aciertos (VP, VN) y errores (FP, FN) en 12.665 observaciones</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-left-wide">
+            <div class="media-card" onclick="openLightbox('images/fig_matrices_confusion.png', 'Figura: Matrices de confusión por estacionamiento y consolidado general')">
+              <img src="images/fig_matrices_confusion.png" alt="Matrices de Confusión">
+              <div class="media-zoom-hint">Clic para ampliar</div>
+              <div class="media-caption">Aciertos (diagonal azul oscura): 4.963 VP y 4.337 VN; Errores: 1.079 FP y 1.886 FN</div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Estacionamiento</th>
+                    <th>VP</th>
+                    <th>FP</th>
+                    <th>VN</th>
+                    <th>FN</th>
+                    <th>Total Obs.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Ortiparking</td>
+                    <td>1.545</td>
+                    <td>483</td>
+                    <td>1.652</td>
+                    <td>616</td>
+                    <td>4.296</td>
+                  </tr>
+                  <tr>
+                    <td>Ortiparking 2</td>
+                    <td>1.782</td>
+                    <td>420</td>
+                    <td>1.619</td>
+                    <td>699</td>
+                    <td>4.520</td>
+                  </tr>
+                  <tr>
+                    <td>Gavilux Suites</td>
+                    <td>1.636</td>
+                    <td><strong>176</strong></td>
+                    <td>1.066</td>
+                    <td>571</td>
+                    <td>3.849</td>
+                  </tr>
+                  <tr class="highlight-row">
+                    <td><strong>Consolidado</strong></td>
+                    <td><strong>4.963</strong></td>
+                    <td><strong>1.079</strong></td>
+                    <td><strong>4.337</strong></td>
+                    <td><strong>1.886</strong></td>
+                    <td><strong>12.665</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="objective-step-box step-navy">
+                <span class="step-tag">💡 ¿Por qué ocurrieron los errores?</span>
+                <div class="step-title">Análisis de Oclusiones y Ángulo Óptico</div>
+                <p class="step-desc">
+                  <strong>Falsos Negativos (1.886):</strong> Camionetas altas tapando visualmente a autos bajos en filas profundas.<br>
+                  <strong>Falsos Positivos (1.079):</strong> Sombras pronunciadas de muros perimetrales al atardecer en patios abiertos. Gavilux, al tener ángulo más cenital, tuvo solo 176 FP.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:30 min</div>
+          <ul>
+            <li>Explicar detalladamente la matriz: 9.300 aciertos totales (VP + VN).</li>
+            <li>Destacar por qué los Falsos Positivos fueron mínimos en Gavilux: el ángulo de cámara es clave en visión artificial.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 21: OBJETIVO 3 - MÉTRICAS DE DESEMPEÑO (CAP. III.3)
+           ========================================================================= -->
+      <section class="slide" data-slide="21" data-duration="1.5 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Objetivo Específico 3 • Capítulo III • Sección 3.3</div>
+            <h2 class="slide-title">Objetivo 3: Métricas de Desempeño y Comparativa</h2>
+            <div class="slide-subtitle">Evaluación de Exactitud, Precisión, Sensibilidad y Puntaje F1 frente al estado del arte</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-left-wide">
+            <div class="media-card" onclick="openLightbox('images/fig_metricas_escenario.png', 'Figura: Comparativa gráfica de métricas de desempeño por estacionamiento')">
+              <img src="images/fig_metricas_escenario.png" alt="Métricas por Escenario">
+              <div class="media-zoom-hint">Clic para ampliar</div>
+              <div class="media-caption">Comparativa porcentual: Precisión superior al 80% en promedio y 90,30% en Gavilux</div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <table class="custom-table">
+                <thead>
+                  <tr>
+                    <th>Estacionamiento</th>
+                    <th>Exactitud</th>
+                    <th>Precisión</th>
+                    <th>Sensibilidad</th>
+                    <th>F1-Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Ortiparking</td>
+                    <td>65,30%</td>
+                    <td>76,18%</td>
+                    <td>71,39%</td>
+                    <td>73,71%</td>
+                  </tr>
+                  <tr>
+                    <td>Ortiparking 2</td>
+                    <td>66,41%</td>
+                    <td>80,92%</td>
+                    <td>73,22%</td>
+                    <td>76,87%</td>
+                  </tr>
+                  <tr>
+                    <td>Gavilux Suites</td>
+                    <td>70,33%</td>
+                    <td><strong>90,30%</strong></td>
+                    <td>72,97%</td>
+                    <td>80,72%</td>
+                  </tr>
+                  <tr class="highlight-row">
+                    <td><strong>Promedio Ponderado</strong></td>
+                    <td><strong>66,67%</strong></td>
+                    <td><strong>80,63%</strong></td>
+                    <td><strong>72,37%</strong></td>
+                    <td><strong>76,22%</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="objective-step-box step-green">
+                <span class="step-tag">🏆 ¿Qué se logró y qué significa?</span>
+                <div class="step-title">Confiabilidad Operacional Superior al 80%</div>
+                <p class="step-desc">Una precisión ponderada de <strong>80,63%</strong> certifica que cuando el bot le indica al conductor que hay plaza libre, el dato es certero en más de 8 de cada 10 situaciones, previniendo viajes en vano y congestión adicional.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:30 min</div>
+          <ul>
+            <li>Explicar al jurado por qué la PRECISIÓN es la métrica clave en transporte: un falso positivo hace perder el tiempo al conductor; más del 80% garantiza satisfacción y confianza.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 22: VERIFICACIÓN INTEGRAL DE OBJETIVOS (CAP. III)
+           ========================================================================= -->
+      <section class="slide" data-slide="22" data-duration="1.2 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Trazabilidad Técnica • Capítulo III Consolidado</div>
+            <h2 class="slide-title">Verificación de Cumplimiento de Objetivos (Cap. III)</h2>
+            <div class="slide-subtitle">Demostración formal del cumplimiento al 100% de los 3 objetivos específicos planteados</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3col">
+            <div class="info-card card-accent-green">
+              <span class="pill pill-green">Objetivo 1 • 100% Cumplido</span>
+              <div class="card-title" style="font-size: 1.05rem; margin-top: 4px;">Capítulo III • Sección 3.1</div>
+              <ul class="bullet-list green" style="font-size: 0.86rem;">
+                <li><strong>¿Qué se hizo?:</strong> Diseño modular de 4 capas y selección tecnológica formal C1-C7.</li>
+                <li><strong>¿Cómo se hizo?:</strong> Flujo asíncrono con procesamiento local y persistencia relacional en Supabase.</li>
+                <li><strong>¿Qué se logró?:</strong> Tolerancia a fallos, cero colapso de ancho de banda y latencias mínimas.</li>
+              </ul>
+            </div>
+
+            <div class="info-card card-accent-green">
+              <span class="pill pill-green">Objetivo 2 • 100% Cumplido</span>
+              <div class="card-title" style="font-size: 1.05rem; margin-top: 4px;">Capítulo III • Sección 3.2</div>
+              <ul class="bullet-list green" style="font-size: 0.86rem;">
+                <li><strong>¿Qué se hizo?:</strong> Prototipo funcional integrado con visión, API y bot conversacional.</li>
+                <li><strong>¿Cómo se hizo?:</strong> YOLOv8n en CPU, recorte basal al 60%, filtro de 8s, FastAPI y Telegram con Haversine.</li>
+                <li><strong>¿Qué se logró?:</strong> Inferencia a >15 FPS en CPU estándar y servicio conversacional accesible en 2 clics.</li>
+              </ul>
+            </div>
+
+            <div class="info-card card-accent-green">
+              <span class="pill pill-green">Objetivo 3 • 100% Cumplido</span>
+              <div class="card-title" style="font-size: 1.05rem; margin-top: 4px;">Capítulo III • Sección 3.3</div>
+              <ul class="bullet-list green" style="font-size: 0.86rem;">
+                <li><strong>¿Qué se hizo?:</strong> Validación experimental de campo en 3 estacionamientos de Ambato (42 plazas).</li>
+                <li><strong>¿Cómo se hizo?:</strong> Contraste minuto a minuto frente a Verdad de Campo en 12.665 observaciones.</li>
+                <li><strong>¿Qué se logró?:</strong> 80,63% de precisión global (90,30% en Gavilux) y 76,22% de F1-Score.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:15 min</div>
+          <ul>
+            <li>Mostrar con seguridad que cada uno de los 3 objetivos específicos está respaldado con entregables de software funcionando y métricas matemáticas verificables.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 23: CONCLUSIONES DE LA INVESTIGACIÓN
+           ========================================================================= -->
+      <section class="slide" data-slide="23" data-duration="1.5 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Capítulo IV • Conclusiones</div>
+            <h2 class="slide-title">Conclusiones de la Investigación</h2>
+            <div class="slide-subtitle">Principales deducciones científicas y aportes técnicos derivados de la tesis</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3col">
+            <div class="info-card card-accent-red">
+              <div class="card-title" style="font-size: 1.05rem;">1. Resiliencia de la Arquitectura Desacoplada</div>
+              <p class="card-text" style="font-size: 0.88rem;">
+                La estructuración modular basada en microservicios desacoplados demostró alta tolerancia a fallos. Canalizar únicamente estados discretos (0/1) hacia Supabase evitó el streaming masivo de video hacia la nube, garantizando que el bot de Telegram mantenga tiempos de respuesta óptimos incluso ante cortes temporales de red en el parqueadero.
+              </p>
+            </div>
+
+            <div class="info-card card-accent-navy">
+              <div class="card-title" style="font-size: 1.05rem;">2. Viabilidad de IA en CPU sin Tarjetas Gráficas</div>
+              <p class="card-text" style="font-size: 0.88rem;">
+                La combinación de YOLOv8n sobre CPU convencional, el algoritmo de recorte basal al 60% (contacto ruedas-asfalto) y el filtro temporal de 8 segundos resolvió con éxito los desafíos físicos del entorno urbano (perspectiva diagonal y sombras), prescindiendo de costosas GPUs dedicadas y de obras civiles en pavimento.
+              </p>
+            </div>
+
+            <div class="info-card card-accent-green">
+              <div class="card-title" style="font-size: 1.05rem;">3. Precisión Probada para Movilidad en Ambato</div>
+              <p class="card-text" style="font-size: 0.88rem;">
+                La validación sobre 12.665 observaciones certificó una <strong>precisión ponderada global de 80,63%</strong> (alcanzando <strong>90,30%</strong> en geometría favorable). Este desempeño previene el direccionamiento erróneo de conductores, validando al prototipo como una solución de bajo costo altamente confiable para la movilidad urbana.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:30 min</div>
+          <ul>
+            <li>Exponer las tres conclusiones con aplomo: arquitectura robusta, modelo viable en hardware accesible y precisión demostrada en campo.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 24: RECOMENDACIONES Y TRABAJO FUTURO (REDISEÑO 2X2 RICO EN CONTENIDO)
+           ========================================================================= -->
+      <section class="slide" data-slide="24" data-duration="1.3 min">
+        <div class="slide-head">
+          <div>
+            <div class="slide-meta-badge">Capítulo IV • Recomendaciones y Trabajo Futuro</div>
+            <h2 class="slide-title">Recomendaciones y Líneas Futuras</h2>
+            <div class="slide-subtitle">Pautas técnicas para despliegues a gran escala y evolución hacia Smart City</div>
+          </div>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2col">
+            <!-- Tarjeta 1: Óptica -->
+            <div class="info-card card-accent-red">
+              <div class="card-title">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                1. Geometría Óptica y Altura de Instalación
+              </div>
+              <p class="card-text">
+                Instalar los dispositivos de captura a una <strong>altura mínima de 4,5 a 5,0 metros</strong> con un ángulo de inclinación hacia abajo <strong>superior a 45°</strong>. Esto atenúa drásticamente la compresión de perspectiva en recintos longitudinales profundos (como Ortiparking de 15m), reduciendo la tasa de Falsos Negativos por autos tapados detrás de camionetas.
+              </p>
+            </div>
+
+            <!-- Tarjeta 2: Transfer Learning -->
+            <div class="info-card card-accent-navy">
+              <div class="card-title">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                2. Transfer Learning con Dataset Andino Local
+              </div>
+              <p class="card-text">
+                Implementar aprendizaje por transferencia sobre YOLOv8n utilizando un conjunto de datos recopilado en Ambato, que contemple la variabilidad vehicular local (camionetas con balde de madera, platones) y condiciones meteorológicas andinas severas (lluvias torrenciales, neblina y sol cenital intenso), elevando la sensibilidad en casillas perimetrales.
+              </p>
+            </div>
+
+            <!-- Tarjeta 3: Edge Computing -->
+            <div class="info-card card-accent-navy">
+              <div class="card-title">
+                <svg class="icon-svg" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect></svg>
+                3. Arquitectura Edge Computing Dedicada
+              </div>
+              <p class="card-text">
+                Evolucionar hacia microcomputadores con aceleración neuronal integrada en sitio (como <strong>Raspberry Pi 5 con AI Kit Hailo-8L</strong> o <strong>Jetson Orin Nano</strong>). Con un consumo menor a 15W y costo accesible (< $150), se garantiza autonomía total en cada estacionamiento sin depender de computadoras compartidas.
+              </p>
+            </div>
+
+            <!-- Tarjeta 4: Expansión de Servicios -->
+            <div class="info-card card-accent-green">
+              <div class="card-title">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                4. Expansión a WhatsApp y Reserva Temporal
+              </div>
+              <p class="card-text">
+                Ampliar la interfaz del asistente integrando la API de <strong>WhatsApp Business</strong> para alcanzar al 100% de conductores, incorporando funcionalidades de <strong>reserva temporal de plazas por 15 minutos</strong> con caducidad automática mediante código QR y algoritmos predictivos de saturación vial según el horario.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:15 min</div>
+          <ul>
+            <li>Explicar que las recomendaciones demuestran rigor ingenieril: no solo software, sino cómo optimizar el hardware físico y expandir el servicio a la ciudad.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- =========================================================================
+           SLIDE 25: CIERRE INSTITUCIONAL Y PREGUNTAS
+           ========================================================================= -->
+      <section class="slide" data-slide="25" data-duration="1.0 min">
+        <div class="cover-container">
+          <img src="images/logo_uta.png" alt="Logo UTA" class="cover-logo" style="height:70px;">
+          <h2 style="font-size: 2.2rem; font-weight: 900; color: var(--color-slate-900); letter-spacing:-0.5px;">¡Muchas Gracias por su Atención!</h2>
+          <div class="cover-divider" style="width: 200px;"></div>
+          <p style="font-size: 1.15rem; color: var(--color-uta-primary); font-weight: 800; max-width: 900px;">
+            PROTOTIPO DE ASISTENTE CONVERSACIONAL CON VISIÓN ARTIFICIAL PARA DISPONIBILIDAD DE PARQUEADEROS EN EL CASCO CÉNTRICO DE AMBATO
+          </p>
+
+          <div class="cover-meta-grid" style="max-width: 650px;">
+            <div class="cover-meta-item">
+              <span class="cover-meta-label">Sustentante</span>
+              <span class="cover-meta-val">Esteban David López Núñez</span>
+            </div>
+            <div class="cover-meta-item">
+              <span class="cover-meta-label">Tutor de Titulación</span>
+              <span class="cover-meta-val">Ing. Dennis Vinicio Chicaiza Castillo, Mg.</span>
+            </div>
+          </div>
+
+          <div style="background: var(--color-uta-light); border: 1px solid var(--color-uta-border); border-radius: var(--radius-md); padding: 14px 28px; margin-top: 10px;">
+            <span style="font-size: 1.05rem; font-weight: 700; color: var(--color-uta-primary);">
+              Espacio abierto para la sesión de preguntas y deliberación del honorable Tribunal Evaluador
+            </span>
+          </div>
+        </div>
+        <div class="speaker-notes-content" style="display:none;">
+          <div class="notes-timing-badge">Tiempo sugerido: 1:00 min</div>
+          <ul>
+            <li>Agradecer formalmente al tribunal evaluador, tutor y autoridades de la facultad.</li>
+            <li>Manifestar total disposición para responder las preguntas del tribunal.</li>
+          </ul>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- BARRA INFERIOR DE CONTROLES -->
+    <footer class="deck-footer">
+      <div class="footer-left">
+        <span>Defensa de Grado • Carrera de Software UTA</span>
+        <button class="btn-ctrl" onclick="toggleOverview()" title="Ver todas las diapositivas (Tecla: O o Esc)">
+          <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          Cuadrícula (O)
+        </button>
+        <button class="btn-ctrl" id="btn-notes" onclick="toggleNotes()" title="Mostrar/Ocultar Notas del Expositor (Tecla: S)">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          Notas (S)
+        </button>
+        <button class="btn-ctrl" id="btn-laser" onclick="toggleLaser()" title="Activar Puntero Láser (Tecla: L)">
+          <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="12" x2="12.01"></line></svg>
+          Láser (L)
+        </button>
+      </div>
+
+      <div class="footer-controls">
+        <button class="btn-ctrl" onclick="prevSlide()" title="Diapositiva Anterior (Flecha Izquierda / Arriba)">
+          <svg class="icon-svg" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Anterior
+        </button>
+        <button class="btn-ctrl btn-primary" onclick="nextSlide()" title="Siguiente Diapositiva (Espacio / Flecha Derecha)">
+          Siguiente
+          <svg class="icon-svg" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </button>
+        <button class="btn-ctrl" onclick="toggleFullScreen()" title="Pantalla Completa (Tecla: F)">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+        </button>
+        <button class="btn-ctrl" onclick="toggleHelp()" title="Atajos de teclado (Tecla: ?)">
+          ?
+        </button>
+      </div>
+    </footer>
+
+    <!-- PUNTERO LÁSER VIRTUAL -->
+    <div id="laser-pointer"></div>
+
+    <!-- PANEL DE NOTAS -->
+    <div id="notes-drawer">
+      <div class="notes-header">
+        <span class="notes-title">Notas de la Diapositiva</span>
+        <button class="btn-ctrl" style="height:24px; padding:0 6px;" onclick="toggleNotes()">✕</button>
+      </div>
+      <div class="notes-body" id="notes-content-target"></div>
+    </div>
+
+    <!-- LIGHTBOX / ZOOM DE IMÁGENES -->
+    <div id="image-lightbox" onclick="closeLightbox()">
+      <button class="lightbox-close-btn" onclick="closeLightbox()">✕</button>
+      <img id="lightbox-img" src="" alt="Ampliación">
+      <div id="lightbox-caption"></div>
+    </div>
+
+    <!-- CUADRÍCULA DE TODAS LAS DIAPOSITIVAS -->
+    <div id="overview-modal">
+      <div class="overview-header">
+        <div class="overview-title">Índice General de Diapositivas</div>
+        <button class="btn-ctrl" onclick="toggleOverview()">Cerrar (Esc)</button>
+      </div>
+      <div class="overview-grid" id="overview-grid-container"></div>
+    </div>
+
+    <!-- MODAL DE AYUDA -->
+    <div id="help-modal" onclick="toggleHelp()">
+      <div class="help-card" onclick="event.stopPropagation()">
+        <h3>Atajos de Teclado para la Defensa</h3>
+        <div class="kbd-list">
+          <div class="kbd-item"><span>Avanzar Diapositiva</span> <span><kbd>→</kbd> <kbd>↓</kbd> <kbd>Espacio</kbd> <kbd>AvPág</kbd></span></div>
+          <div class="kbd-item"><span>Retroceder Diapositiva</span> <span><kbd>←</kbd> <kbd>↑</kbd> <kbd>RePág</kbd> <kbd>Retroceso</kbd></span></div>
+          <div class="kbd-item"><span>Primera / Última Diapositiva</span> <span><kbd>Inicio</kbd> / <kbd>Fin</kbd></span></div>
+          <div class="kbd-item"><span>Cuadrícula de Diapositivas</span> <span><kbd>O</kbd> o <kbd>Esc</kbd></span></div>
+          <div class="kbd-item"><span>Notas del Expositor</span> <span><kbd>S</kbd></span></div>
+          <div class="kbd-item"><span>Puntero Láser Virtual</span> <span><kbd>L</kbd></span></div>
+          <div class="kbd-item"><span>Iniciar / Pausar Cronómetro</span> <span><kbd>T</kbd></span></div>
+          <div class="kbd-item"><span>Pantalla Completa</span> <span><kbd>F</kbd></span></div>
+          <div class="kbd-item"><span>Cerrar Modales</span> <span><kbd>Esc</kbd></span></div>
+        </div>
+        <button class="btn-ctrl btn-primary" style="margin-top:20px; width:100%;" onclick="toggleHelp()">Entendido</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JAVASCRIPT ENGINE -->
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const totalSlides = slides.length;
+    let currentSlideIndex = 0;
+
+    let timerSeconds = 0;
+    let timerRunning = false;
+    let timerInterval = null;
+
+    let laserActive = false;
+    const laserElem = document.getElementById('laser-pointer');
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateSlideView();
+      generateOverviewGrid();
+      setupLaser();
+      startTimer();
+    });
+
+    function goToSlide(slideNum) {
+      const index = slideNum - 1;
+      if (index >= 0 && index < totalSlides) {
+        currentSlideIndex = index;
+        updateSlideView();
+        closeOverview();
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlideIndex < totalSlides - 1) {
+        currentSlideIndex++;
+        updateSlideView();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlideIndex > 0) {
+        currentSlideIndex--;
+        updateSlideView();
+      }
+    }
+
+    function updateSlideView() {
+      slides.forEach((s, idx) => {
+        if (idx === currentSlideIndex) {
+          s.classList.add('active');
+        } else {
+          s.classList.remove('active');
+        }
+      });
+
+      const num = currentSlideIndex + 1;
+      document.getElementById('slide-counter').textContent = `Diapositiva ${num} / ${totalSlides}`;
+      const progressPct = (num / totalSlides) * 100;
+      document.getElementById('progress-fill').style.width = `${progressPct}%`;
+
+      if (num !== 18) {
+        const vid = document.getElementById('demo-video-player');
+        if (vid && !vid.paused) vid.pause();
+      }
+
+      updateSpeakerNotes();
+
+      const thumbs = document.querySelectorAll('.overview-thumb');
+      thumbs.forEach((th, i) => {
+        if (i === currentSlideIndex) {
+          th.classList.add('current');
+        } else {
+          th.classList.remove('current');
+        }
+      });
+    }
+
+    function startTimer() {
+      if (!timerRunning) {
+        timerRunning = true;
+        timerInterval = setInterval(() => {
+          timerSeconds++;
+          renderTimer();
+        }, 1000);
+      }
+    }
+
+    function pauseTimer() {
+      if (timerRunning) {
+        timerRunning = false;
+        clearInterval(timerInterval);
+      }
+    }
+
+    function toggleTimer() {
+      if (timerRunning) {
+        pauseTimer();
+      } else {
+        startTimer();
+      }
+    }
+
+    function renderTimer() {
+      const mins = Math.floor(timerSeconds / 60);
+      const secs = timerSeconds % 60;
+      const strMins = String(mins).padStart(2, '0');
+      const strSecs = String(secs).padStart(2, '0');
+      const display = document.getElementById('timer-display');
+      const widget = document.getElementById('defense-timer');
+      
+      display.textContent = `${strMins}:${strSecs} / 20:00`;
+
+      if (timerSeconds >= 20 * 60) {
+        widget.className = 'timer-widget danger';
+      } else if (timerSeconds >= 15 * 60) {
+        widget.className = 'timer-widget warning';
+      } else {
+        widget.className = 'timer-widget';
+      }
+    }
+
+    document.getElementById('defense-timer').addEventListener('click', toggleTimer);
+
+    function toggleNotes() {
+      const drawer = document.getElementById('notes-drawer');
+      const btn = document.getElementById('btn-notes');
+      if (drawer.classList.contains('active')) {
+        drawer.classList.remove('active');
+        btn.classList.remove('active-tool');
+      } else {
+        drawer.classList.add('active');
+        btn.classList.add('active-tool');
+        updateSpeakerNotes();
+      }
+    }
+
+    function updateSpeakerNotes() {
+      const currentSlide = slides[currentSlideIndex];
+      const notesDiv = currentSlide.querySelector('.speaker-notes-content');
+      const target = document.getElementById('notes-content-target');
+      if (notesDiv && target) {
+        target.innerHTML = notesDiv.innerHTML;
+      } else if (target) {
+        target.innerHTML = '<p style="color:var(--color-slate-500); font-style:italic;">No hay notas específicas para esta diapositiva.</p>';
+      }
+    }
+
+    function openLightbox(src, caption) {
+      const lb = document.getElementById('image-lightbox');
+      const img = document.getElementById('lightbox-img');
+      const cap = document.getElementById('lightbox-caption');
+      img.src = src;
+      cap.textContent = caption || '';
+      lb.classList.add('active');
+    }
+
+    function closeLightbox() {
+      document.getElementById('image-lightbox').classList.remove('active');
+    }
+
+    function toggleOverview() {
+      document.getElementById('overview-modal').classList.toggle('active');
+    }
+
+    function closeOverview() {
+      document.getElementById('overview-modal').classList.remove('active');
+    }
+
+    function generateOverviewGrid() {
+      const container = document.getElementById('overview-grid-container');
+      container.innerHTML = '';
+      slides.forEach((s, idx) => {
+        const titleElem = s.querySelector('.slide-title') || s.querySelector('.cover-thesis-title');
+        const titleText = titleElem ? titleElem.textContent.trim() : `Diapositiva ${idx + 1}`;
+        const thumb = document.createElement('div');
+        thumb.className = `overview-thumb ${idx === currentSlideIndex ? 'current' : ''}`;
+        thumb.innerHTML = `
+          <div class="overview-thumb-num">Diapositiva ${idx + 1}</div>
+          <div class="overview-thumb-title">${titleText}</div>
+        `;
+        thumb.addEventListener('click', () => {
+          goToSlide(idx + 1);
+        });
+        container.appendChild(thumb);
+      });
+    }
+
+    function switchVideo(videoSrc, description) {
+      const player = document.getElementById('demo-video-player');
+      const desc = document.getElementById('video-caption-text');
+      const buttons = document.querySelectorAll('.video-tab-btn');
+      
+      buttons.forEach(btn => btn.classList.remove('active'));
+      if (window.event && window.event.target) {
+        window.event.target.classList.add('active');
+      }
+
+      if (player) {
+        player.src = videoSrc;
+      }
+      if (desc) desc.innerHTML = `<strong>Detalle:</strong> ${description}`;
+    }
+
+    function toggleLaser() {
+      laserActive = !laserActive;
+      const btn = document.getElementById('btn-laser');
+      if (laserActive) {
+        laserElem.style.display = 'block';
+        btn.classList.add('active-tool');
+      } else {
+        laserElem.style.display = 'none';
+        btn.classList.remove('active-tool');
+      }
+    }
+
+    function setupLaser() {
+      document.addEventListener('mousemove', (e) => {
+        if (laserActive) {
+          laserElem.style.left = `${e.clientX}px`;
+          laserElem.style.top = `${e.clientY}px`;
+        }
+      });
+    }
+
+    function toggleFullScreen() {
+      const isFS = !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+      if (!isFS) {
+        const el = document.documentElement;
+        if (el.requestFullscreen) {
+          el.requestFullscreen().catch(e => console.log(e));
+        } else if (el.webkitRequestFullscreen) {
+          el.webkitRequestFullscreen();
+        } else if (el.msRequestFullscreen) {
+          el.msRequestFullscreen();
+        }
+        document.body.classList.add('fullscreen-mode');
+        updateFullscreenButtons(true);
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen().catch(e => console.log(e));
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+          document.msExitFullscreen();
+        }
+        document.body.classList.remove('fullscreen-mode');
+        updateFullscreenButtons(false);
+      }
+    }
+
+    function updateFullscreenButtons(isFull) {
+      const headerText = document.getElementById('btn-header-fs-text');
+      if (headerText) {
+        headerText.textContent = isFull ? 'Salir Pantalla Completa' : 'Pantalla Completa (F)';
+      }
+    }
+
+    ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach(evt => {
+      document.addEventListener(evt, () => {
+        const isFS = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+        if (isFS) {
+          document.body.classList.add('fullscreen-mode');
+          updateFullscreenButtons(true);
+        } else {
+          document.body.classList.remove('fullscreen-mode');
+          updateFullscreenButtons(false);
+        }
+      });
+    });
+
+    let mouseActiveTimer = null;
+    document.addEventListener('mousemove', () => {
+      document.body.classList.add('mouse-active');
+      clearTimeout(mouseActiveTimer);
+      mouseActiveTimer = setTimeout(() => {
+        document.body.classList.remove('mouse-active');
+      }, 2500);
+    });
+
+    function toggleHelp() {
+      document.getElementById('help-modal').classList.toggle('active');
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const lb = document.getElementById('image-lightbox');
+        const ov = document.getElementById('overview-modal');
+        const hp = document.getElementById('help-modal');
+        if (lb.classList.contains('active')) { closeLightbox(); return; }
+        if (ov.classList.contains('active')) { closeOverview(); return; }
+        if (hp.classList.contains('active')) { toggleHelp(); return; }
+      }
+
+      switch (e.key) {
+        case 'ArrowRight':
+        case 'ArrowDown':
+        case 'PageDown':
+        case ' ':
+        case 'n':
+        case 'N':
+          nextSlide();
+          break;
+        case 'ArrowLeft':
+        case 'ArrowUp':
+        case 'PageUp':
+        case 'Backspace':
+        case 'p':
+        case 'P':
+          prevSlide();
+          break;
+        case 'Home':
+          goToSlide(1);
+          break;
+        case 'End':
+          goToSlide(totalSlides);
+          break;
+        case 'o':
+        case 'O':
+          toggleOverview();
+          break;
+        case 's':
+        case 'S':
+          toggleNotes();
+          break;
+        case 'l':
+        case 'L':
+          toggleLaser();
+          break;
+        case 't':
+        case 'T':
+          toggleTimer();
+          break;
+        case 'f':
+        case 'F':
+          toggleFullScreen();
+          break;
+        case '?':
+          toggleHelp();
+          break;
+      }
+    });
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, false);
+
+    document.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchEndX < touchStartX - 50) nextSlide();
+      if (touchEndX > touchStartX + 50) prevSlide();
+    }, false);
+  </script>
+</body>
+</html>
